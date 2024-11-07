@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  objet: MyString
+  corps: MyText
+  date_envoi: 2024-11-07 13:23:36
+  est_lu: false
+  est_brouillon: false
+  expediteur: one
+
+two:
+  objet: MyString
+  corps: MyText
+  date_envoi: 2024-11-07 13:23:36
+  est_lu: false
+  est_brouillon: false
+  expediteur: two
