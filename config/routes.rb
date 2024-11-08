@@ -2,13 +2,14 @@ Rails.application.routes.draw do
   get "receptions/index"
   get "receptions/show"
   get "receptions/create"
-  get "emails/index"
+  get "emails", to: "emails#index"
   get "emails/show"
-  get "emails/new"
+  get "emails/new", to: "emails#new"
   get "emails/edit"
-  get "utilisateurs/index"
+  get "login", to: "utilisateurs#index", as: :login
   get "utilisateurs/show"
-  get "utilisateurs/new"
+  post "utilisateurs/create", to: "utilisateurs#create", as: :utilisateurs
+  get "register", to: "utilisateurs#new"
   get "utilisateurs/edit"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

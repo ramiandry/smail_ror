@@ -1,4 +1,5 @@
 class EmailsController < ApplicationController
+  layout "layout"
   def index
     @emails = Email.all
   end

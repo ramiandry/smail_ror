@@ -18,7 +18,7 @@ class UtilisateursController < ApplicationController
   def create
     @utilisateur = Utilisateur.new(utilisateur_params)
     if @utilisateur.save
-      redirect_to @utilisateur, notice: "Utilisateur créé avec succès."
+      redirect_to login_path, notice: "Utilisateur créé avec succès."
     else
       render :new, status: :unprocessable_entity
     end
@@ -50,6 +50,6 @@ class UtilisateursController < ApplicationController
 
   # Strong Parameters pour sécuriser les paramètres
   def utilisateur_params
-    params.require(:utilisateur).permit(:nom, :email, :mot_de_passe)
+    params.require(:utilisateur).permit(:nom, :prenom, :email, :mot_de_passe)
   end
 end
