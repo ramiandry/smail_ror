@@ -50,6 +50,6 @@ class UtilisateursController < ApplicationController
 
   # Strong Parameters pour sécuriser les paramètres
   def utilisateur_params
-    params.require(:utilisateur).permit(:nom, :prenom, :email, :mot_de_passe)
+    params.require(:utilisateur).permit(:nom, :prenom, :email, :password, :password_confirmation)
   end
 end

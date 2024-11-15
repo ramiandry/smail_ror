@@ -7,7 +7,7 @@ class CreateEmails < ActiveRecord::Migration[7.2]
       t.boolean :est_lu
       t.boolean :est_brouillon
       t.boolean :est_spam
-      t.references :expediteur, null: false, foreign_key: true
+      t.references :expediteur, null: false, foreign_key: { to_table: :users }
 
       t.timestamps
     end

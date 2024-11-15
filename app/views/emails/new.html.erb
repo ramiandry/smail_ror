@@ -7,20 +7,19 @@
         <div class="user">
             <%= form_with model: @email do |form| %>
             <div class="form-group">
-                <%= form.text_field :title, placeholder: "Adresse email", type:"email", class:"form-control form-control-user", id:"exampleInputEmail"%>
+                <%= form.text_field :email, placeholder: "Adresse email", type:"email", class:"form-control form-control-user", id:"exampleInputEmail"%>
             </div>
             <div class="form-group">
-                <input type="text" class="form-control form-control-user" id="exampleInputText" placeholder="Objet">
-                <%= form.text_field :title, placeholder: "Objet", class:"form-control form-control-user", id:"exampleInputEmail"%>
+                <%= form.text_field :objet, placeholder: "Objet", class:"form-control form-control-user", id:"exampleInputEmail"%>
             </div>
             <div class="form-group">
-                <%= form.text_area :description , class:"form-control", placeholder:"Votre message ici...", style:"width: 100%; height:50vh "%>
+                <%= form.text_area :corps,id: "summernote" , class:"form-control", placeholder:"Votre message ici...", style:"width: 100%; height:50vh "%>
             </div>
             <div class="form-group">
                 <div>
-                   <%= f.button :submit, "Envoyé", class: "btn btn-facebook btn-block" do %>
-  <i class="fa fa-send fa-fw"></i>
-<% end %>
+                   <%= form.button :submit, class: "btn btn-facebook btn-block" do %>
+                  <i class="fa fa-paper-plane mr-3"></i>Envoyé
+                  <% end %>
 
                 </div>
             </div>
@@ -29,3 +28,33 @@
 
     </div>
 </div>
+
+<% content_for :scripts do %>
+  <script>
+  $('#summernote').summernote({
+    placeholder: 'Write your content here...',
+    tabsize: 2,
+    height: 200, // Set the height of the editor
+    toolbar: [
+      ['style', ['style']],
+      ['font', ['bold', 'italic', 'underline', 'clear']],
+      ['para', ['ul', 'ol', 'paragraph']],
+      ['insert', ['link', 'file']],
+      ['view', ['fullscreen', 'help']]
+    ]
+  });
+
+    // Ajouter un bouton personnalisé après l'initialisation de Summernote
+  $('.note-btn-group.note-insert').append(`
+    <button type="button" class="note-btn" id="myCustomButton" tabindex="-1" aria-label="Custom Button">
+      <i class="fa fa-file"></i>
+    </button>
+  `);
+
+  // Ajouter une action au bouton personnalisé
+  $('#myCustomButton').on('click', function() {
+    alert('Custom button clicked!');
+    // Vous pouvez ajouter toute autre fonctionnalité que vous souhaitez ici
+  });
+  </script>
+<% end %>

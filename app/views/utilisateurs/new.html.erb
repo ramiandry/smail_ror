@@ -40,19 +40,19 @@
                                 <%= form_with model: @utilisateur do |f| %>
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <%= f.text_field :email, class:"form-control form-control-user", id:"exampleFirstName", placeholder:"Prénoms" %>
+                                        <%= f.text_field :prenom, class:"form-control form-control-user", id:"exampleFirstName", placeholder:"Prénoms" %>
 
                                     </div>
                                     <div class="col-sm-6">
-                                        <%= f.text_field :password, class:"form-control form-control-user", id:"exampleLastName",placeholder:"Nom" %>
+                                        <%= f.text_field :nom, class:"form-control form-control-user", id:"exampleLastName",placeholder:"Nom" %>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <%= f.text_field :email, type:"email", class:"form-control form-control-user", id:"email", placeholder:"email@smail.com", disabled: true%>
+                                    <%= f.text_field :email, type:"email", class:"form-control form-control-user", id:"email", placeholder:"email@smail.com"%>
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                    <%= f.text_field :mot_de_passe, type:"password", class:"form-control form-control-user",id:"exampleInputPassword", placeholder:"Password"%>
+                                    <%= f.text_field :password_digest, type:"password", class:"form-control form-control-user",id:"exampleInputPassword", placeholder:"Password"%>
                                     </div>
                                     <div class="col-sm-6">
                                     <%= f.text_field :password, type:"password", class:"form-control form-control-user",id:"exampleInputPassword", placeholder:"Repeat Password"%>
