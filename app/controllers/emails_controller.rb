@@ -3,7 +3,7 @@ class EmailsController < ApplicationController
   before_action :authentifier_utilisateur!
 
   def index
-    @emails = Email.all
+    @emails = Email.joins(receptions: :utilisateur).where(utilisateur: { id: session[:utilisateur_id] })
   end
 
   def show
@@ -25,6 +25,12 @@ class EmailsController < ApplicationController
       if @email.save
         reception=Reception.new({ utilisateur_id: expediteur.id, email_id: Email.last&.id })
         reception.save
+        if params[:email][:pieces_jointes]
+          params[:email][:pieces_jointes].each do |file|
+            p "-----------------------------tafiditra------------------------------------------------------------------"
+            @email.pieces_jointes.attach(file)
+          end
+        end
       else
       render :new, status: :unprocessable_entity
       end
@@ -59,7 +65,7 @@ class EmailsController < ApplicationController
   def email_params
     # Rechercher l'utilisateur par email
     params[:email][:expediteur_id]=session[:utilisateur_id]
-    params.require(:email).permit(:objet, :corps, :date_envoi, :est_lu, :est_brouillon, :est_spam, :expediteur_id)
+    params.require(:email).permit(:objet, :corps, :date_envoi, :est_lu, :est_brouillon, :est_spam, :expediteur_id, pieces_jointes: [])
   end
 
   private

@@ -1,2 +1,17 @@
 <h1>Emails#show</h1>
 <p>Find me in app/views/emails/show.html.erb</p>
+
+
+# <% @emails.each do |email| %>
+#                     <h3><%= email.objet %></h3>
+#                     <% email.pieces_jointes.each do |piece| %>
+#                       <p>
+#                         <strong>Fichier joint :</strong>
+#                         <% if piece.content_type.start_with?('image/') %>
+#                           <%= image_tag rails_blob_path(piece, disposition: "inline"), alt: piece.filename.to_s %>
+#                         <% else %>
+#                           <%= link_to piece.filename.to_s, rails_blob_path(piece, disposition: "attachment") %>
+#                         <% end %>
+#                       </p>
+#                     <% end %>
+#                   <% end %>

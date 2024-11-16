@@ -5,7 +5,7 @@
     </div>
     <div class="card-body">
         <div class="user">
-            <%= form_with model: @email do |form| %>
+            <%= form_with( model: @email, multipart: true) do |form| %>
             <div class="form-group">
                 <%= form.text_field :email, placeholder: "Adresse email", type:"email", class:"form-control form-control-user", id:"exampleInputEmail"%>
             </div>
@@ -14,6 +14,9 @@
             </div>
             <div class="form-group">
                 <%= form.text_area :corps,id: "summernote" , class:"form-control", placeholder:"Votre message ici...", style:"width: 100%; height:50vh "%>
+            </div>
+            <div class="form-group" id="piece_jointe">
+            <%= form.file_field :pieces_jointes, multiple: true %>              
             </div>
             <div class="form-group">
                 <div>
@@ -50,11 +53,17 @@
       <i class="fa fa-file"></i>
     </button>
   `);
-
+  var i=1;
   // Ajouter une action au bouton personnalisé
   $('#myCustomButton').on('click', function() {
-    alert('Custom button clicked!');
-    // Vous pouvez ajouter toute autre fonctionnalité que vous souhaitez ici
+    let element=$('<input>')
+    element.attr("type","file")
+    element.attr("multiple","multiple")
+    element.attr("style","display:none")
+    element.attr("id","email_pieces_jointes")
+    element.attr("name","email[pieces_jointes][]")
+    $('#piece_jointe').append(element)
+    element.click()
   });
   </script>
 <% end %>

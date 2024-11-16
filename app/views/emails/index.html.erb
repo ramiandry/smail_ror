@@ -1,2 +1,38 @@
-<h1>Emails#index</h1>
-<p>Find me in app/views/emails/index.html.erb</p>
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h1 class="m-0 font-weight-bold text-primary">Boite de réception</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="98%" cellspacing="0">
+                <thead>
+                      <tr>
+                          <div class="d-flex border-bottom text-dark mb-3" style="font-weight: bold;">
+                              <div style="width: 25%;">Expediteur</div>
+                              <div style="width: 35%;">Titre</div>
+                              <div style="width: 20%;">Date et heure</div>
+                              <div style="width: 20%; text-align: center;">Action</div>
+                          </div>
+                      </tr>
+                </thead>
+                <tbody>
+                  <% @emails.each do |email| %>
+                    <tr>
+                          <div class="d-flex border-bottom text-dark pt-1 pb-1">
+                              <div style="width: 25%;"><%= email.expediteur.email%></div>
+                              <div style="width: 35%;"><b><%= email.objet%></b></div>
+                              <div style="width: 20%;"><%= email.date_envoi%></div>
+                              <div class="d-flex justify-content-between" style="width: 20%;">
+                                <a  href="" ><i class="fa fa-exclamation-triangle" data-toggle="tooltip" data-placement="top" title="Spam"></i></a>
+                                <a href=""><i class="fa fa-star" data-toggle="tooltip" data-placement="top" title="Favoris"></i></a>
+                                <a href=""><i class="fa fa-archive" data-toggle="tooltip" data-placement="top" title="Archiver"></i></a>
+                                <a href=""><i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="Supprimer"></i></a>
+                              </div>
+                          </div>
+                      </tr>
+                  <% end %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
