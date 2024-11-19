@@ -19,7 +19,7 @@
     <link href="/css/sb-admin-2.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-lite.min.css" rel="stylesheet">
 
-
+    <%= yield :style %>
 </head>
 
 <body id="page-top">
@@ -49,26 +49,38 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="index.html">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                <a class="nav-link" href="<%= url_for(controller: 'emails', action: 'index') %>">
+                    <i class="fa fa-envelope"></i>
                     <span>Boite de réception</span></a>
             </li>
 
             <li class="nav-item">
                 <a class="nav-link" href="index.html">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <i class="fa fa-paper-plane"></i>
                     <span>Messages envoyés</span></a>
             </li>
 
             <li class="nav-item">
                 <a class="nav-link" href="index.html">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <i class="fa fa-star"></i>
+                    <span>Favoris</span></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="index.html">
+                    <i class="fa fa-archive"></i>
+                    <span>Archiver</span></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="index.html">
+                    <i class="fa fa-exclamation-triangle"></i>
                     <span>Spam</span></a>
             </li>
 
             <li class="nav-item">
                 <a class="nav-link" href="index.html">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <i class="fa fa-trash"></i>
                     <span>Corbeille</span></a>
             </li>
 

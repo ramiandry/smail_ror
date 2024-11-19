@@ -5,10 +5,14 @@ Rails.application.routes.draw do
   get "receptions/index"
   get "receptions/show"
   get "receptions/create"
-  get "emails/show"
   get "emails/new", to: "emails#new", as: :newemails
+  get "emails/:id", to: "emails#show"
   post "emails/create", to: "emails#create", as: :emails
-  get "emails/edit"
+  post "emails/destroy/:id", to: "emails#destroy"
+  post "emails/archiver/:id", to: "emails#archiver"
+  post "emails/spam/:id", to: "emails#spam"
+  get "emails/favoris/:id", to: "emails#favoris"
+  get "emails/non_lu/:id", to: "emails#non_lu"
   get "signin", to: "utilisateurs#index", as: :login
   get "utilisateurs/show"
   post "utilisateurs/create", to: "utilisateurs#create", as: :utilisateurs

@@ -1,2 +1,11 @@
 <h1>Emails#edit</h1>
 <p>Find me in app/views/emails/edit.html.erb</p>
+<div class="profile-photo">
+  <% if user.photo.present? %>
+    <img src="<%= user.photo.url %>" alt="Photo de profil" class="img-fluid rounded-circle" />
+  <% else %>
+    <span class="badge badge-primary rounded-circle text-white" style="width: 50px; height: 50px; font-size: 24px; display: flex; justify-content: center; align-items: center;">
+      <%= user.name[0].upcase %> <!-- Première lettre du nom -->
+    </span>
+  <% end %>
+</div>
