@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_15_113726) do
+ActiveRecord::Schema[7.2].define(version: 2024_11_21_082607) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -49,6 +49,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_15_113726) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "expediteur_id", null: false
+    t.boolean "est_favoris", default: false
     t.index ["expediteur_id"], name: "index_emails_on_expediteur_id"
   end
 
@@ -78,6 +79,11 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_15_113726) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "prenom"
+    t.string "avatar"
+    t.string "tel"
+    t.boolean "sexe"
+    t.date "date_naissance"
+    t.string "adresse"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"

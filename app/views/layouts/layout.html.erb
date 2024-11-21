@@ -11,15 +11,18 @@
 
     <title>😁&nbsp;Smail</title>
 
-    <!-- Custom fonts for this template-->
     <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
-    <!-- Custom styles for this template-->
     <link href="/css/sb-admin-2.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-lite.min.css" rel="stylesheet">
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.min.css">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js"></script>
 
+    <%= yield :style %>
 </head>
 
 <body id="page-top">
@@ -35,7 +38,7 @@
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">Smail</div>
+                <div class="sidebar-brand-text mx-3"><%= @app_name%></div>
             </a>
 
             <!-- Divider -->
@@ -49,26 +52,38 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="index.html">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                <a class="nav-link" href="<%= url_for(controller: 'emails', action: 'index') %>">
+                    <i class="fa fa-envelope"></i>
                     <span>Boite de réception</span></a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="index.html">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                <a class="nav-link" href="<%= url_for(controller: 'emails', action: 'envoyer') %>">
+                    <i class="fa fa-paper-plane"></i>
                     <span>Messages envoyés</span></a>
             </li>
 
             <li class="nav-item">
                 <a class="nav-link" href="index.html">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <i class="fa fa-star"></i>
+                    <span>Favoris</span></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="index.html">
+                    <i class="fa fa-archive"></i>
+                    <span>Archiver</span></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="index.html">
+                    <i class="fa fa-exclamation-triangle"></i>
                     <span>Spam</span></a>
             </li>
 
             <li class="nav-item">
                 <a class="nav-link" href="index.html">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <i class="fa fa-trash"></i>
                     <span>Corbeille</span></a>
             </li>
 
@@ -249,12 +264,11 @@
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
-                                <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
-                            </a>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><%= @user.nom.titleize%> <%= @user.prenom.titleize%></span>
+                                <%= image_tag rails_blob_path(@user.avatar, disposition: "inline"), class: "img-profile rounded-circle"  %>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="<%= url_for(controller: 'utilisateurs', action: 'profile') %>">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Profile
                                 </a>
@@ -325,8 +339,8 @@
                 </div>
                 <div class="modal-body">Êtes-vous sûre de quitter l'application ?</div>
                 <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="<%= url_for(controller: 'sessions', action: 'destroy') %>">Logout</a>
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Rester</button>
+                    <a class="btn btn-primary" href="<%= url_for(controller: 'sessions', action: 'destroy') %>">Se deconnecter</a>
                 </div>
             </div>
         </div>
@@ -335,7 +349,6 @@
     <!-- Bootstrap core JavaScript-->
     <script src="/vendor/jquery/jquery.min.js"></script>
     <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
     <!-- Core plugin JavaScript-->
     <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
 
@@ -350,9 +363,15 @@
     <script src="/js/demo/datatables-demo.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-lite.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.4.4/dist/umd/popper.min.js"></script>
     <script>
         $(document).ready(function(){
             $('[data-toggle="tooltip"]').tooltip();   
+        });
+        var iti = window.intlTelInput(phoneInput, {
+        initialCountry: "us",  // Le pays par défaut (ici, les États-Unis)
+        onlyCountries: [],     // Afficher tous les pays
+        utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
         });
     </script>
 

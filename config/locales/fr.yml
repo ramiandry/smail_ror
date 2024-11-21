@@ -1,0 +1,35 @@
+fr:
+  date:
+    day_names:
+      - "Dimanche"
+      - "Lundi"
+      - "Mardi"
+      - "Mercredi"
+      - "Jeudi"
+      - "Vendredi"
+      - "Samedi"
+
+    month_names:
+      - "Janvier"
+      - "Février"
+      - "Mars"
+      - "Avril"
+      - "Mai"
+      - "Juin"
+      - "Juillet"
+      - "Août"
+      - "Septembre"
+      - "Octobre"
+      - "Novembre"
+      - "Décembre"
+      
+    formats:
+      default: "%d/%m/%Y"        # Format par défaut : jour/mois/année
+      short: "%d %b %Y"              # Format court : 17 Nov
+      long: "%A %d %B %Y"         # Format long : jour de la semaine, jour, mois, année
+
+  time:
+    formats:
+      default: "%H:%M"            # Format de temps par défaut : Heure:Minute
+      short: "%d %B %Y à %H:%M"              # Format court : Heure:Minute
+      long: "%A %d %B %Y, %H:%M"   # Format long : jour de la semaine, jour, mois, année, heure:minute
