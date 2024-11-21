@@ -1,0 +1,146 @@
+ <% content_for :style do %>
+   <style>
+    #profilePicture {
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      border: 2px solid #ddd;
+    }
+
+    .profile-wrapper {
+      position: relative;
+      display: inline-block;
+    }
+
+    .camera-icon {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      background-color: #007bff;
+      color: white;
+      border-radius: 50%;
+      padding: 7px 10px;
+      cursor: pointer;
+      font-size: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      transition: background-color 0.3s;
+    }
+
+    .camera-icon:hover {
+      background-color: #0056b3;
+    }
+
+    #profileInput {
+      display: none;
+    }
+  </style>
+ <% end %>
+ 
+ 
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h2 class="m-0 font-weight-bold text-primary">Modifier Profile</h6>
+    </div>
+<div class="card-body">
+  <%= form_with model: @utilisateur, url: edit_profile_path do |f| %>
+    <div class="text-center mb-3">
+      <div class="profile-wrapper">
+        <!-- Image de profil  -->
+        
+        <% if @utilisateur.avatar %>
+        <%= image_tag rails_blob_path(@utilisateur.avatar , disposition: "inline"), class: "rounded-circle", width: "120px" %>
+        <% else %>
+        <img id="profilePicture" src='/img/undraw_profile.svg'  class="rounded-circle" alt="Profile Picture">
+        <% end %>
+        
+        <!-- Input caché pour le fichier -->
+        <label for="profileInput" class="camera-icon">
+          <i class="fas fa-camera"></i>
+        </label>
+        <%= f.file_field :avatar, id: "profileInput", accept: "image/*", class: "d-none" %>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <%= f.label :nom, "Nom" %>
+        <%= f.text_field :nom, class: "form-control", placeholder: "First Name", value: @utilisateur.nom %>
+      </div>
+      <div class="form-group col-md-6">
+        <%= f.label :prenom, "Prenoms" %>
+        <%= f.text_field :prenom, class: "form-control", placeholder: "Last Name", value: @utilisateur.prenom %>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :email, "Email" %>
+      <div class="input-group">
+        <%= f.email_field :email, class: "form-control", placeholder: "Email", disabled: true, value: @utilisateur.email %>
+        <div class="input-group-append">
+          <span class="input-group-text text-success">&#10004;</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+        <%= f.label :sexe, "Sexe" %>
+        <%= f.select :sexe, [["Masculin", 1],[ "Feminin", 0] ], {selected: @utilisateur.sexe}, class: "form-control" %>
+    </div>
+
+    <div class="form-group">
+    <%= f.label :date_naissance, "Date de naissance" %>
+    <%= f.text_field :date_naissance, type: 'date', class: "form-control", value: @utilisateur.date_naissance %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :tel, "N° Téléphone" %>
+    <div class="input-group">
+        <%= f.text_field :tel, class: "form-control", placeholder: "Tel", value: @utilisateur.tel %>
+    </div>
+    </div>
+
+    <div class="form-group">
+     <%= f.label :adresse, "Adresse" %>
+    <%= f.text_field :adresse, class: "form-control", placeholder: "Adresse", value: @utilisateur.adresse %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :password, "Password" %>
+      <div class="input-group">
+        <%= f.password_field :password, class: "form-control", placeholder: "Password", value: @utilisateur.password %>
+        <div class="input-group-append">
+          <span class="input-group-text text-success">&#10004;</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group text-center">
+      <%= link_to "Cancel", root_path, class: "btn btn-outline-danger mr-2" %>
+      <%= f.submit "Save", class: "btn btn-primary" %>
+    </div>
+  <% end %>
+  </div>
+</div>
+
+    
+
+<% content_for :scripts do %>
+  <script>
+    // Script pour la prévisualisation de la photo
+    const profileInput = document.getElementById('profileInput');
+    const profilePicture = document.getElementById('profilePicture');
+
+    profileInput.addEventListener('change', function (event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          profilePicture.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+  </script>
+<% end %>
+  

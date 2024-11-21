@@ -1,4 +1,7 @@
 class UtilisateursController < ApplicationController
+  layout "layout", only: [ :profile ] # Spécifie que ce layout s'applique uniquement à la méthode :profile
+  before_action :authentifier_utilisateur!, only: [ :profile ] # Applique le before_action uniquement à la méthode :profile
+
   # Affiche tous les utilisateurs
   def index
     @utilisateurs = Utilisateur.all
@@ -7,6 +10,10 @@ class UtilisateursController < ApplicationController
   # Affiche un utilisateur spécifique
   def show
     @utilisateur = Utilisateur.find(params[:id])
+  end
+
+  def profile
+    @utilisateur = Utilisateur.find(session[:utilisateur_id])
   end
 
   # Affiche le formulaire pour créer un nouvel utilisateur
@@ -31,7 +38,8 @@ class UtilisateursController < ApplicationController
 
   # Met à jour un utilisateur existant
   def update
-    @utilisateur = Utilisateur.find(params[:id])
+    print utilisateur_params
+    @utilisateur = Utilisateur.find(session[:utilisateur_id])
     if @utilisateur.update(utilisateur_params)
       redirect_to @utilisateur, notice: "Utilisateur mis à jour avec succès."
     else
@@ -50,6 +58,14 @@ class UtilisateursController < ApplicationController
 
   # Strong Parameters pour sécuriser les paramètres
   def utilisateur_params
-    params.require(:utilisateur).permit(:nom, :prenom, :email, :password, :password_confirmation)
+    params.require(:utilisateur).permit(:nom, :prenom, :email, :avatar, :sexe, :adresse, :tel, :date_naissance, :password, :password_confirmation)
+  end
+
+  private
+  # Méthode pour vérifier si un utilisateur est connecté
+  def authentifier_utilisateur!
+    unless utilisateur_connecte?
+      redirect_to login_path, alert: "Vous devez être connecté pour accéder à cette page."
+    end
   end
 end

@@ -4,9 +4,15 @@ class EmailsController < ApplicationController
 
   def index
     @emails = Email.joins(receptions: :utilisateur)
-               .where(utilisateur: { id: session[:utilisateur_id] })
-               .where(est_spam: false, est_archiver: false)
-               .order(created_at: :desc)
+    .where(utilisateur: { id: session[:utilisateur_id] })
+    .where(est_spam: false, est_archiver: false)
+    .order(created_at: :desc)
+  end
+
+  def envoyer
+    @emails = Email.joins(receptions: :utilisateur)
+                .where(expediteur: session[:utilisateur_id])
+                .order(created_at: :desc)
   end
 
   def show

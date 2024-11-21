@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   get "receptions/show"
   get "receptions/create"
   get "emails/new", to: "emails#new", as: :newemails
+  get "emails/envoyer", to: "emails#envoyer"
   get "emails/:id", to: "emails#show"
   post "emails/create", to: "emails#create", as: :emails
   post "emails/destroy/:id", to: "emails#destroy"
@@ -14,10 +15,10 @@ Rails.application.routes.draw do
   get "emails/favoris/:id", to: "emails#favoris"
   get "emails/non_lu/:id", to: "emails#non_lu"
   get "signin", to: "utilisateurs#index", as: :login
-  get "utilisateurs/show"
+  get "utilisateurs/profile", to: "utilisateurs#profile", as: :profile
   post "utilisateurs/create", to: "utilisateurs#create", as: :utilisateurs
   get "register", to: "utilisateurs#new"
-  get "utilisateurs/edit"
+  patch "utilisateurs/update", to: "utilisateurs#update", as: :edit_profile
   post "login", to: "sessions#create", as: :session
   delete "logout", to: "sessions#destroy"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

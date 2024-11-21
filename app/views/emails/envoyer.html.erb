@@ -8,7 +8,7 @@
 
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h1 class="m-0 font-weight-bold text-primary">Boite de réception</h6>
+        <h1 class="m-0 font-weight-bold text-primary">Messages envoyés</h6>
     </div>
     <div class="card-body">
         <div class="table-responsive">
@@ -29,30 +29,17 @@
                         <div class="d-flex border-bottom text-dark pt-1 pb-1" style="background-color: <%= email.est_lu ? 'transparent' : '#d8ecfd' %>;">
                               <div class="d-flex" style="width: 80%; cursor:pointer;" onclick="show('<%= email.id%>')">
                                <div style="width: 5%;">
-                                  <% if email.expediteur.avatar? %>
-                                    <%= image_tag rails_blob_path(email.expediteur.avatar , disposition: "inline"), class: "rounded-circle", width: "30px" %>
-                                <% else %>
                                 <span class="badge badge-primary rounded-circle text-white" style="width: 30px; height: 30px; font-size: 18px; display: flex; justify-content: center; align-items: center;">
                                 <%= email.expediteur.nom[0].upcase + email.expediteur.prenom[0].upcase %> <!-- Première lettre du nom -->
                                 </span>
-                                <% end %>
                                </div>
                               <div style="width: 30%;"><%= email.expediteur.nom.titleize%> <%= email.expediteur.prenom.titleize%></div>
                               <div style="width: 40%;"><b><%= email.objet%></b></div>
                               <div style="width: 25%;"><%= l(email.date_envoi, format: :short) %></div>
                               </div>
-                              <div class="d-flex justify-content-between" style="width: 20%;">
-                                <a  href="" data-toggle="modal" data-target="#spamModal<%=email.id%>" class="actionbtn"><i class="fa fa-exclamation-triangle" data-toggle="tooltip" data-placement="top" title="Spam"></i></a>
-                            <a href="<%= url_for(controller: 'emails', action: 'favoris', id: email.id) %>" 
-                            class="actionbtn" 
-                            rel="nofollow">
-                            <%= email.est_favoris ? '<i class="fa fa-star" data-toggle="tooltip" data-placement="top" title="Favoris"></i>'.html_safe : '<svg xmlns="http://www.w3.org/2000/svg" x-bind:width="size" x-bind:height="size" viewBox="0 0 24 24" fill="none" stroke="currentColor" x-bind:stroke-width="stroke" stroke-linecap="round" stroke-linejoin="round" width="24" height="24" stroke-width="2">
-                                <path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z"></path>
-                            </svg>'.html_safe %>
-                            </a>
-                                <a href="" class="actionbtn" data-toggle="modal" data-target="#archModal<%=email.id%>"><i class="fa fa-archive" data-toggle="tooltip" data-placement="top" title="Archiver"></i></a>
-                                <a href="" class="actionbtn" data-toggle="modal" data-target="#supprModal<%=email.id%>"><i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="Supprimer"></i></a>
-                                <a href="<%= url_for(controller: 'emails', action: 'non_lu', id: email.id) %>" class="actionbtn" ><i class="fa fa-eye-slash" data-toggle="tooltip" data-placement="top" title="Marquer non lu"></i></a>
+                              <div class="d-flex justify-content-center" style="width: 20%;">
+                                <a  href="" data-toggle="modal" data-target="#spamModal<%=email.id%>" class="actionbtn mr-3"><i class="fa fa-share" data-toggle="tooltip" data-placement="top" title="Transferer"></i></a>
+                                <a href="" class="actionbtn ml-3" data-toggle="modal" data-target="#supprModal<%=email.id%>"><i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="Supprimer"></i></a>
                               </div>
                           </div>
                       </tr>
