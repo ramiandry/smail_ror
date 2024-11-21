@@ -41,7 +41,7 @@ class UtilisateursController < ApplicationController
     print utilisateur_params
     @utilisateur = Utilisateur.find(session[:utilisateur_id])
     if @utilisateur.update(utilisateur_params)
-      redirect_to @utilisateur, notice: "Utilisateur mis à jour avec succès."
+    redirect_to root_path, notice: "Utilisateur mis à jour avec succès."
     else
       render :edit, status: :unprocessable_entity
     end

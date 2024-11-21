@@ -7,6 +7,7 @@ class EmailsController < ApplicationController
     .where(utilisateur: { id: session[:utilisateur_id] })
     .where(est_spam: false, est_archiver: false)
     .order(created_at: :desc)
+    .page(params[:page]).per(3)
   end
 
   def envoyer

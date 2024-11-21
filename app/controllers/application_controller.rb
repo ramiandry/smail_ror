@@ -15,7 +15,9 @@ class ApplicationController < ActionController::Base
   end
 
   def set_layout_data
-    @user=Utilisateur.find(session[:utilisateur_id])
+    if utilisateur_connecte?
+      @user=Utilisateur.find(session[:utilisateur_id])
+    end
     @app_name = "Smail"  # Donnée accessible dans le layout
     @utilisateur_connecte = utilisateur_connecte?  # L'état de la connexion de l'utilisateur
   end

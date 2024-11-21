@@ -47,7 +47,7 @@
       <div class="profile-wrapper">
         <!-- Image de profil  -->
         
-        <% if @utilisateur.avatar %>
+        <% if @utilisateur.avatar? %>
         <%= image_tag rails_blob_path(@utilisateur.avatar , disposition: "inline"), class: "rounded-circle", width: "120px" %>
         <% else %>
         <img id="profilePicture" src='/img/undraw_profile.svg'  class="rounded-circle" alt="Profile Picture">
