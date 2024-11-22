@@ -1,0 +1,56 @@
+<div class="card shadow mb-4" style="height: 85vh;">
+    <div class="card-header py-3">
+        <h2 class="m-0 font-weight-bold text-primary">Recherche: <%= params[:word] %> </h6>
+    </div>
+    <div class="card-body">
+         <div id="accordion">
+
+  <div class="card">
+    <div class="card-header">
+      <a class="card-link" >
+        <i class="fa fa-envelope"></i> Message reçus
+      </a>
+    </div>
+    <div id="collapseOne" class="collapse show" data-parent="#accordion">
+      <div class="card-body">
+            <%= render 'emails/search_recus' %>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <a class="collapsed card-link" >
+       <i class="fa fa-paper-plane"></i> Message envoyés
+      </a>
+    </div>
+    <div id="collapseTwo" class="collapse show">
+      <div class="card-body">
+         <%= render 'emails/search_envoyer' %>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <a class="collapsed card-link">
+       <i class="fa fa-users"></i> Utilisateurs
+      </a>
+    </div>
+    <div id="collapseThree" class="collapse show" >
+      <div class="card-body">
+        <%= render 'emails/search_user' %>
+      </div>
+    </div>
+  </div>
+
+</div> 
+    </div>
+</div>
+<% content_for :scripts do %>
+    <script>
+    function show(id){     
+        window.location.href="/emails/"+id
+    }
+    </script>
+<% end %>

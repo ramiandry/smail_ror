@@ -7,13 +7,29 @@ class EmailsController < ApplicationController
     .where(utilisateur: { id: session[:utilisateur_id] })
     .where(est_spam: false, est_archiver: false)
     .order(created_at: :desc)
-    .page(params[:page]).per(3)
+    .page(params[:page]).per(10)
   end
 
   def envoyer
     @emails = Email.joins(receptions: :utilisateur)
                 .where(expediteur: session[:utilisateur_id])
                 .order(created_at: :desc)
+  end
+
+  def search
+    p params[:word]
+    @users = Utilisateur.where("email LIKE ?", "%#{params[:word]}%")
+
+    @emailrecus = Email.joins(receptions: :utilisateur)
+    .where(utilisateur: { id: session[:utilisateur_id] })
+    .where(est_spam: false, est_archiver: false)
+    .where("emails.corps LIKE :word OR emails.objet LIKE :word", word: "%#{params[:word]}%") # Filtrage par email
+    .order(created_at: :desc)
+
+    @emailenvoyer = Email.joins(receptions: :utilisateur)
+    .where(expediteur: session[:utilisateur_id])
+    .where("emails.corps LIKE :word OR emails.objet LIKE :word", word: "%#{params[:word]}%") # Filtrage par email
+    .order(created_at: :desc)
   end
 
   def show

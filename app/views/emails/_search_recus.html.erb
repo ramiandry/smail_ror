@@ -1,0 +1,102 @@
+            <table class="table table-striped" id="dataTable" width="98%" cellspacing="0">
+                <thead>
+                      <tr>
+                          <div class="d-flex border-bottom text-dark mb-3 bg-none" style="font-weight: bold;">
+                              <div style="width: 28%;">Expediteur</div>
+                              <div style="width: 35%;">Titre</div>
+                              <div style="width: 20%;">Date et heure</div>
+                              <div style="width: 20%; text-align: center;">Action</div>
+                          </div>
+                      </tr>
+                </thead>
+                <tbody>
+                  <% @emailrecus.each do |email| %>
+                    <tr>
+                        <div class="d-flex border-bottom text-dark pt-1 pb-1" style="background-color: <%= email.est_lu ? 'transparent' : '#d8ecfd' %>;">
+                              <div class="d-flex" style="width: 80%; cursor:pointer;" onclick="show('<%= email.id%>')">
+                               <div style="width: 5%;">
+                                  <% if email.expediteur.avatar? %>
+                                    <%= image_tag rails_blob_path(email.expediteur.avatar , disposition: "inline"), class: "rounded-circle", width: "30px" %>
+                                <% else %>
+                                <span class="badge badge-primary rounded-circle text-white" style="width: 30px; height: 30px; font-size: 18px; display: flex; justify-content: center; align-items: center;">
+                                <%= email.expediteur.nom[0].upcase + email.expediteur.prenom[0].upcase %> <!-- Première lettre du nom -->
+                                </span>
+                                <% end %>
+                               </div>
+                              <div style="width: 30%;"><%= email.expediteur.nom.titleize%> <%= email.expediteur.prenom.titleize%></div>
+                              <div style="width: 40%;"><b><%= email.objet%></b></div>
+                              <div style="width: 25%;"><%= l(email.date_envoi, format: :short) %></div>
+                              </div>
+                              <div class="d-flex justify-content-between" style="width: 20%;">
+                                <a  href="" data-toggle="modal" data-target="#spamModal<%=email.id%>" class="actionbtn"><i class="fa fa-exclamation-triangle" data-toggle="tooltip" data-placement="top" title="Spam"></i></a>
+                            <a href="<%= url_for(controller: 'emails', action: 'favoris', id: email.id) %>" 
+                            class="actionbtn" 
+                            rel="nofollow">
+                            <%= email.est_favoris ? '<i class="fa fa-star" data-toggle="tooltip" data-placement="top" title="Favoris"></i>'.html_safe : '<svg xmlns="http://www.w3.org/2000/svg" x-bind:width="size" x-bind:height="size" viewBox="0 0 24 24" fill="none" stroke="currentColor" x-bind:stroke-width="stroke" stroke-linecap="round" stroke-linejoin="round" width="24" height="24" stroke-width="2">
+                                <path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z"></path>
+                            </svg>'.html_safe %>
+                            </a>
+                                <a href="" class="actionbtn" data-toggle="modal" data-target="#archModal<%=email.id%>"><i class="fa fa-archive" data-toggle="tooltip" data-placement="top" title="Archiver"></i></a>
+                                <a href="" class="actionbtn" data-toggle="modal" data-target="#supprModal<%=email.id%>"><i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="Supprimer"></i></a>
+                                <a href="<%= url_for(controller: 'emails', action: 'non_lu', id: email.id) %>" class="actionbtn" ><i class="fa fa-eye-slash" data-toggle="tooltip" data-placement="top" title="Marquer non lu"></i></a>
+                              </div>
+                          </div>
+                      </tr>
+                      <!-- Supprimer Modal-->
+                        <div class="modal fade" id="supprModal<%=email.id%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Suppression</h5>
+                                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">×</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">Êtes-vous sûre de suprrimer ce message ?</div>
+                                    <div class="modal-footer">
+                                        <button class="btn btn-secondary" type="button" data-dismiss="modal">No</button>
+                                        <%= button_to "Oui",  url_for(controller: 'emails', action: 'destroy',id:email.id), method: :post, class:"btn btn-primary" %>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <!-- Archiver Modal-->
+                        <div class="modal fade" id="archModal<%=email.id%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Archiver</h5>
+                                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">×</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">Êtes-vous sûre d'archiver ce message ?</div>
+                                    <div class="modal-footer">
+                                        <button class="btn btn-secondary" type="button" data-dismiss="modal">No</button>
+                                        <%= button_to "Oui",  url_for(controller: 'emails', action: 'archiver',id:email.id), method: :post, class:"btn btn-primary" %>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    
+                    <!-- Favoris Modal-->
+                        <div class="modal fade" id="spamModal<%=email.id%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Spam</h5>
+                                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">×</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">Êtes-vous sûre de considerer ce message en spam ?</div>
+                                    <div class="modal-footer">
+                                        <button class="btn btn-secondary" type="button" data-dismiss="modal">No</button>
+                                        <%= button_to "Oui",  url_for(controller: 'emails', action: 'spam',id:email.id), method: :post, class:"btn btn-primary" %>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                  <% end %>
+                </tbody>
+            </table>

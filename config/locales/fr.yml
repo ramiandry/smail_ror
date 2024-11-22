@@ -31,5 +31,5 @@ fr:
   time:
     formats:
       default: "%H:%M"            # Format de temps par défaut : Heure:Minute
-      short: "%d %B %Y à %H:%M"              # Format court : Heure:Minute
+      short: "%d %B %Y à %H:%M"          # Format court : Heure:Minute
       long: "%A %d %B %Y, %H:%M"   # Format long : jour de la semaine, jour, mois, année, heure:minute
