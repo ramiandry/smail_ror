@@ -8,7 +8,7 @@
 
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h1 class="m-0 font-weight-bold text-primary">Boite de réception</h6>
+        <h1 class="m-0 font-weight-bold text-primary">Archive</h6>
     </div>
     <div class="card-body">
         <div class="table-responsive">
@@ -50,7 +50,7 @@
                                 <path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z"></path>
                             </svg>'.html_safe %>
                             </a>
-                                <a href="" class="actionbtn" data-toggle="modal" data-target="#archModal<%=email.id%>"><i class="fa fa-archive" data-toggle="tooltip" data-placement="top" title="Archiver"></i></a>
+                                <a href="" class="actionbtn" data-toggle="modal" data-target="#archModal<%=email.id%>"><i class="fa fa-archive" data-toggle="tooltip" data-placement="top" title="Désarchiver"></i></a>
                                 <a href="" class="actionbtn" data-toggle="modal" data-target="#supprModal<%=email.id%>"><i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="Supprimer"></i></a>
                                 <a href="<%= url_for(controller: 'emails', action: 'non_lu', id: email.id) %>" class="actionbtn" ><i class="fa fa-eye-slash" data-toggle="tooltip" data-placement="top" title="Marquer non lu"></i></a>
                               </div>
@@ -84,7 +84,7 @@
                                             <span aria-hidden="true">×</span>
                                         </button>
                                     </div>
-                                    <div class="modal-body">Êtes-vous sûre d'archiver ce message ?</div>
+                                    <div class="modal-body">Êtes-vous sûre de désarchiver ce message ?</div>
                                     <div class="modal-footer">
                                         <button class="btn btn-secondary" type="button" data-dismiss="modal">No</button>
                                         <%= button_to "Oui",  url_for(controller: 'emails', action: 'archiver',id:email.id), method: :post, class:"btn btn-primary" %>
@@ -125,7 +125,7 @@
 <% content_for :scripts do %>
     <script>
     function show(id){     
-        window.location.href="/emails/br/"+id
+        window.location.href="/emails/arch/"+id
     }
     </script>
 <% end %>

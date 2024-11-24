@@ -6,7 +6,10 @@ Rails.application.routes.draw do
   get "receptions/show"
   get "receptions/create"
   get "emails/new", to: "emails#new", as: :newemails
-  get "emails/envoyer", to: "emails#envoyer"
+  get "emails/envoyer", to: "emails#envoyer", as: :envoyer
+  get "emails/spam", to: "emails#showSpam", as: :spam
+  get "emails/archive", to: "emails#showArchive", as: :archive
+  get "emails/favoris", to: "emails#showFavoris", as: :favoris
   post "emails/create", to: "emails#create", as: :emails
   post "emails/destroy/:id", to: "emails#destroy"
   post "emails/archiver/:id", to: "emails#archiver"
@@ -22,7 +25,7 @@ Rails.application.routes.draw do
   patch "utilisateurs/update", to: "utilisateurs#update", as: :edit_profile
   post "login", to: "sessions#create", as: :session
   delete "logout", to: "sessions#destroy"
-  get "emails/:id", to: "emails#show"
+  get "emails/:etat/:id", to: "emails#show"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

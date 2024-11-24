@@ -8,7 +8,7 @@
 
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h1 class="m-0 font-weight-bold text-primary">Messages envoyés</h6>
+        <h1 class="m-0 font-weight-bold text-primary">Spam</h6>
     </div>
     <div class="card-body">
         <div class="table-responsive">
@@ -29,17 +29,22 @@
                         <div class="d-flex border-bottom text-dark pt-1 pb-1" style="background-color: <%= email.est_lu ? 'transparent' : '#d8ecfd' %>;">
                               <div class="d-flex" style="width: 80%; cursor:pointer;" onclick="show('<%= email.id%>')">
                                <div style="width: 5%;">
+                                  <% if email.expediteur.avatar? %>
+                                    <%= image_tag rails_blob_path(email.expediteur.avatar , disposition: "inline"), class: "rounded-circle", width: "30px" %>
+                                <% else %>
                                 <span class="badge badge-primary rounded-circle text-white" style="width: 30px; height: 30px; font-size: 18px; display: flex; justify-content: center; align-items: center;">
                                 <%= email.expediteur.nom[0].upcase + email.expediteur.prenom[0].upcase %> <!-- Première lettre du nom -->
                                 </span>
+                                <% end %>
                                </div>
                               <div style="width: 30%;"><%= email.expediteur.nom.titleize%> <%= email.expediteur.prenom.titleize%></div>
                               <div style="width: 40%;"><b><%= email.objet%></b></div>
                               <div style="width: 25%;"><%= l(email.date_envoi, format: :short) %></div>
                               </div>
-                              <div class="d-flex justify-content-center" style="width: 20%;">
-                                <a  href="" data-toggle="modal" data-target="#spamModal<%=email.id%>" class="actionbtn mr-3"><i class="fa fa-share" data-toggle="tooltip" data-placement="top" title="Transferer"></i></a>
-                                <a href="" class="actionbtn ml-3" data-toggle="modal" data-target="#supprModal<%=email.id%>"><i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="Supprimer"></i></a>
+                              <div class="d-flex justify-content-between" style="width: 20%;">
+                                <a  href="" data-toggle="modal" data-target="#spamModal<%=email.id%>" class="actionbtn"><i class="fas fa-check-circle" data-toggle="tooltip" data-placement="top" title="Non Spam"></i></a>
+                                <a href="" class="actionbtn" data-toggle="modal" data-target="#supprModal<%=email.id%>"><i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="Supprimer"></i></a>
+                                <a href="<%= url_for(controller: 'emails', action: 'non_lu', id: email.id) %>" class="actionbtn" ><i class="fa fa-eye-slash" data-toggle="tooltip" data-placement="top" title="Marquer non lu"></i></a>
                               </div>
                           </div>
                       </tr>
@@ -55,8 +60,27 @@
                                     </div>
                                     <div class="modal-body">Êtes-vous sûre de suprrimer ce message ?</div>
                                     <div class="modal-footer">
-                                        <button class="btn btn-secondary" type="button" data-dismiss="modal">No</button>
+                                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Non</button>
                                         <%= button_to "Oui",  url_for(controller: 'emails', action: 'destroy',id:email.id), method: :post, class:"btn btn-primary" %>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    
+                    <!-- Favoris Modal-->
+                        <div class="modal fade" id="spamModal<%=email.id%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Spam</h5>
+                                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">×</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">Êtes-vous sûre de considerer ce message en spam ?</div>
+                                    <div class="modal-footer">
+                                        <button class="btn btn-secondary" type="button" data-dismiss="modal">No</button>
+                                        <%= button_to "Oui",  url_for(controller: 'emails', action: 'spam',id:email.id), method: :post, class:"btn btn-primary" %>
                                     </div>
                                 </div>
                             </div>
@@ -64,6 +88,10 @@
                   <% end %>
                 </tbody>
             </table>
+            <div style="width: fit-content; float:right">
+            <%= paginate @emails, class:"float-end" %>
+
+            </div>
         </div>
     </div>
 </div>
@@ -71,7 +99,7 @@
 <% content_for :scripts do %>
     <script>
     function show(id){     
-        window.location.href="/emails/env/"+id
+        window.location.href="/emails/spam/"+id
     }
     </script>
 <% end %>

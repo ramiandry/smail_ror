@@ -45,38 +45,38 @@
             <hr class="sidebar-divider my-0">
 
             <!-- Nav Item - Dashboard -->
-            <li class="nav-item">
+            <li class="nav-item <%= request.path==newemails_path ? 'active' : '' %> ">
                 <a class="nav-link" href="<%= url_for(controller: 'emails', action: 'new') %>">
                     <i class="fa fa-plus"></i>
                     <span>Nouveau</span></a>
             </li>
 
-            <li class="nav-item">
+            <li class="nav-item <%= request.path==root_path ? 'active' : '' %>">
                 <a class="nav-link" href="<%= url_for(controller: 'emails', action: 'index') %>">
                     <i class="fa fa-envelope"></i>
                     <span>Boite de réception</span></a>
             </li>
 
-            <li class="nav-item">
+            <li class="nav-item <%= request.path==envoyer_path ? 'active' : '' %>">
                 <a class="nav-link" href="<%= url_for(controller: 'emails', action: 'envoyer') %>">
                     <i class="fa fa-paper-plane"></i>
                     <span>Messages envoyés</span></a>
             </li>
 
-            <li class="nav-item">
-                <a class="nav-link" href="index.html">
+            <li class="nav-item <%= request.path==favoris_path ? 'active' : '' %>">
+                <a class="nav-link" href="<%= url_for(controller: 'emails', action: 'showFavoris') %>">
                     <i class="fa fa-star"></i>
                     <span>Favoris</span></a>
             </li>
 
-            <li class="nav-item">
-                <a class="nav-link" href="index.html">
+            <li class="nav-item <%= request.path==archive_path ? 'active' : '' %>">
+                <a class="nav-link" href="<%= url_for(controller: 'emails', action: 'showArchive') %>">
                     <i class="fa fa-archive"></i>
                     <span>Archiver</span></a>
             </li>
 
-            <li class="nav-item">
-                <a class="nav-link" href="index.html">
+            <li class="nav-item <%= request.path==spam_path ? 'active' : '' %>">
+                <a class="nav-link" href="<%= url_for(controller: 'emails', action: 'showSpam') %>">
                     <i class="fa fa-exclamation-triangle"></i>
                     <span>Spam</span></a>
             </li>

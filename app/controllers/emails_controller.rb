@@ -35,6 +35,31 @@ class EmailsController < ApplicationController
   def show
     @email = Email.find(params[:id])
     @email.update(est_lu: true) unless @email.est_lu
+    @etat=params[:etat]
+  end
+
+  def showSpam
+    @emails = Email.joins(receptions: :utilisateur)
+    .where(utilisateur: { id: session[:utilisateur_id] })
+    .where(est_spam: true)
+    .order(created_at: :desc)
+    .page(params[:page]).per(10)
+  end
+
+  def showArchive
+    @emails = Email.joins(receptions: :utilisateur)
+    .where(utilisateur: { id: session[:utilisateur_id] })
+    .where(est_spam: false, est_archiver: true)
+    .order(created_at: :desc)
+    .page(params[:page]).per(10)
+  end
+
+  def showFavoris
+    @emails = Email.joins(receptions: :utilisateur)
+    .where(utilisateur: { id: session[:utilisateur_id] })
+    .where(est_spam: false, est_favoris: true)
+    .order(created_at: :desc)
+    .page(params[:page]).per(10)
   end
 
   def new
