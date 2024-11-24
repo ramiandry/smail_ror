@@ -16,7 +16,7 @@
                 <tbody>
                   <% @users.each do |user| %>
                     <tr>
-                        <div class="d-flex border-bottom text-dark pt-1 pb-1" onclick="show('<%= user.id%>')" style="cursor:pointer;">
+                        <div class="d-flex border-bottom text-dark pt-1 pb-1" onclick="showUser('<%= user.id%>')" style="cursor:pointer;">
                                <div style="width: 5%;">
                                   <% if user.avatar? %>
                                     <%= image_tag rails_blob_path(user.avatar , disposition: "inline"), class: "rounded-circle", width: "30px" %>
@@ -38,4 +38,10 @@
             <% else %>
                 <h2>No result</h2>
             <% end %>
-            
+<% content_for :scripts do %>
+    <script>
+    function showUser(id){     
+        window.location.href="/utilisateurs/show/"+id
+    }
+    </script>
+<% end %>

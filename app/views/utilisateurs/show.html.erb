@@ -1,2 +1,76 @@
-<h1>Utilisateurs#show</h1>
-<p>Find me in app/views/utilisateurs/show.html.erb</p>
+ <% content_for :style do %>
+   <style>
+      .profile-wrapper img {
+        transition: transform 0.2s ease-in-out;
+      }
+
+      .profile-wrapper img:hover {
+        transform: scale(1.05);
+      }
+
+      .card-body ul li {
+        font-size: 1.1rem;
+      }
+
+      .btn-primary {
+        border-radius: 25px;
+      }
+  </style>
+ <% end %>
+ 
+ <div class="card shadow mb-4">
+  <div class="card-header bg-primary text-white text-center py-3">
+    <h2 class="m-0 font-weight-bold">Informations</h2>
+  </div>
+  <div class="card-body">
+    <div class="row align-items-center justify-content-center">
+      <!-- Photo de profil -->
+      <div class="col-md-4 text-center">
+        <div class="profile-wrapper mb-3">
+          <% if @utilisateur.avatar? %>
+            <%= image_tag rails_blob_path(@utilisateur.avatar, disposition: "inline"), class: "rounded-circle img-fluid shadow", alt: "Avatar", style: "width: 200px; height: 200px; object-fit: cover;" %>
+          <% else %>
+            <img src="/img/undraw_profile.svg" class="rounded-circle img-fluid shadow" alt="Default Profile" style="width: 200px; height: 200px; object-fit: cover;">
+          <% end %>
+        </div>
+      </div>
+
+      <!-- Informations utilisateur -->
+      <div class="col-md-8">
+        <ul class="list-unstyled">
+          <li class="mb-3">
+            <i class="fa fa-user text-primary mr-2"></i> 
+            <strong><%= @utilisateur.nom.titleize %> <%= @utilisateur.prenom.titleize %></strong>
+          </li>
+          <li class="mb-3">
+            <i class="fa fa-envelope text-primary mr-2"></i> 
+            <%= @utilisateur.email %>
+          </li>
+          <li class="mb-3">
+            <%= @utilisateur.sexe? ? "<i class='fa fa-male text-primary ml-2 mr-2'></i> Masculin".html_safe : "<i class='fa fa-female text-primary mr-2'></i> Féminin".html_safe %>
+          </li>
+          <li class="mb-3">
+            <i class="fa fa-calendar text-primary mr-2"></i> 
+            <%= @utilisateur.date_naissance %>
+          </li>
+          <li class="mb-3">
+            <i class="fa fa-mobile text-primary mr-2"></i> 
+            <%= @utilisateur.tel %>
+          </li>
+          <li class="mb-3">
+            <i class="fa fa-map-marker-alt text-primary mr-2"></i> 
+            <%= @utilisateur.adresse %>
+          </li>
+        </ul>
+        <div class="d-flex justify-content-start gap-2 mt-3 mr-3">
+          <a href="<%= url_for(controller: 'emails', action: 'new', email: @utilisateur.email) %>" class="btn btn-primary btn-sm">
+            <i class="fa fa-comments mr-2"></i>Message
+          </a>
+          <a href="tel:<%= @utilisateur.tel %>" class="btn btn-primary btn-sm ml-3">
+            <i class="fa fa-phone mr-2"></i>Appeler
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

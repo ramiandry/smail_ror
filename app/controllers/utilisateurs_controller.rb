@@ -1,6 +1,6 @@
 class UtilisateursController < ApplicationController
-  layout "layout", only: [ :profile ] # Spécifie que ce layout s'applique uniquement à la méthode :profile
-  before_action :authentifier_utilisateur!, only: [ :profile ] # Applique le before_action uniquement à la méthode :profile
+  layout "layout", only: [ :profile, :show ] # Spécifie que ce layout s'applique uniquement à la méthode :profile
+  before_action :authentifier_utilisateur!, only: [ :profile, :show ] # Applique le before_action uniquement à la méthode :profile
 
   # Affiche tous les utilisateurs
   def index
