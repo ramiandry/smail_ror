@@ -81,8 +81,8 @@
                     <span>Spam</span></a>
             </li>
 
-            <li class="nav-item">
-                <a class="nav-link" href="index.html">
+            <li class="nav-item <%= request.path==corbeille_path ? 'active' : '' %>">
+                <a class="nav-link" href="<%= url_for(controller: 'emails', action: 'corbeille') %>">
                     <i class="fa fa-trash"></i>
                     <span>Corbeille</span></a>
             </li>

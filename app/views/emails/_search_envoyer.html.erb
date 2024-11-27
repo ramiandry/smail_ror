@@ -13,7 +13,7 @@
                   <% @emailenvoyer.each do |email| %>
                     <tr>
                         <div class="d-flex border-bottom text-dark pt-1 pb-1" style="background-color: <%= email.est_lu ? 'transparent' : '#d8ecfd' %>;">
-                              <div class="d-flex" style="width: 80%; cursor:pointer;" onclick="show('<%= email.id%>')">
+                              <div class="d-flex" style="width: 80%; cursor:pointer;" onclick="show('<%= email.id%>','env')">
                                <div style="width: 5%;">
                                 <span class="badge badge-primary rounded-circle text-white" style="width: 30px; height: 30px; font-size: 18px; display: flex; justify-content: center; align-items: center;">
                                 <%= email.expediteur.nom[0].upcase + email.expediteur.prenom[0].upcase %> <!-- Première lettre du nom -->

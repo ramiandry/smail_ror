@@ -2,16 +2,19 @@ Rails.application.routes.draw do
   get "sessions/new"
   get "sessions/create"
   get "sessions/destroy"
-  get "receptions/index"
-  get "receptions/show"
-  get "receptions/create"
+  patch "receptions/supprimer", to: "receptions#supprimer"
+  patch "emails/supprimer", to: "emails#supprimer"
   get "emails/new", to: "emails#new", as: :newemails
   get "emails/envoyer", to: "emails#envoyer", as: :envoyer
   get "emails/spam", to: "emails#showSpam", as: :spam
   get "emails/archive", to: "emails#showArchive", as: :archive
   get "emails/favoris", to: "emails#showFavoris", as: :favoris
+  get "emails/corbeille", to: "emails#corbeille", as: :corbeille
   post "emails/create", to: "emails#create", as: :emails
   post "emails/destroy/:id", to: "emails#destroy"
+  patch "emails/restaurer/:id", to: "emails#restaurer"
+  patch "receptions/restaurer/:id", to: "receptions#restaurer"
+  post "receptions/destroy/:id", to: "receptions#destroy"
   post "emails/archiver/:id", to: "emails#archiver"
   post "emails/spam/:id", to: "emails#spam"
   get "emails/search", to: "emails#search", as: :search

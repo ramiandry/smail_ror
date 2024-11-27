@@ -5,14 +5,17 @@ class EmailsController < ApplicationController
   def index
     @emails = Email.joins(receptions: :utilisateur)
     .where(utilisateur: { id: session[:utilisateur_id] })
+    .where(receptions: { date_suppr: nil })
     .where(est_spam: false, est_archiver: false)
     .order(created_at: :desc)
+    .select("emails.*", "receptions.id as ids")
     .page(params[:page]).per(10)
   end
 
   def envoyer
     @emails = Email.joins(receptions: :utilisateur)
                 .where(expediteur: session[:utilisateur_id])
+                .where("emails.date_suppr IS NULL")
                 .order(created_at: :desc)
   end
 
@@ -23,11 +26,13 @@ class EmailsController < ApplicationController
     @emailrecus = Email.joins(receptions: :utilisateur)
     .where(utilisateur: { id: session[:utilisateur_id] })
     .where(est_spam: false, est_archiver: false)
+    .where("receptions.date_suppr IS NULL")
     .where("emails.corps LIKE :word OR emails.objet LIKE :word", word: "%#{params[:word]}%") # Filtrage par email
     .order(created_at: :desc)
 
     @emailenvoyer = Email.joins(receptions: :utilisateur)
     .where(expediteur: session[:utilisateur_id])
+    .where("receptions.date_suppr IS NULL")
     .where("emails.corps LIKE :word OR emails.objet LIKE :word", word: "%#{params[:word]}%") # Filtrage par email
     .order(created_at: :desc)
   end
@@ -42,6 +47,7 @@ class EmailsController < ApplicationController
     @emails = Email.joins(receptions: :utilisateur)
     .where(utilisateur: { id: session[:utilisateur_id] })
     .where(est_spam: true)
+    .where("receptions.date_suppr IS NULL")
     .order(created_at: :desc)
     .page(params[:page]).per(10)
   end
@@ -50,6 +56,7 @@ class EmailsController < ApplicationController
     @emails = Email.joins(receptions: :utilisateur)
     .where(utilisateur: { id: session[:utilisateur_id] })
     .where(est_spam: false, est_archiver: true)
+    .where("receptions.date_suppr IS NULL")
     .order(created_at: :desc)
     .page(params[:page]).per(10)
   end
@@ -58,6 +65,7 @@ class EmailsController < ApplicationController
     @emails = Email.joins(receptions: :utilisateur)
     .where(utilisateur: { id: session[:utilisateur_id] })
     .where(est_spam: false, est_favoris: true)
+    .where("receptions.date_suppr IS NULL")
     .order(created_at: :desc)
     .page(params[:page]).per(10)
   end
@@ -134,11 +142,42 @@ class EmailsController < ApplicationController
     redirect_to root_path, notice: "Email #{status_message} avec succès."
   end
 
+  def supprimer
+    @email = Email.find(params[:id])
+    @email.update(date_suppr: Date.today)
+    status_message = "now"
+    redirect_back(fallback_location: root_path, notice: "Email #{status_message} avec succès.")
+  end
+
+  def restaurer
+    @email = Email.find(params[:id])
+    @email.update(date_suppr: nil)
+    status_message = "now"
+    redirect_to envoyer_path, notice: "Email #{status_message} avec succès."
+  end
+
   def destroy
     @email = Email.find(params[:id])
     @email.destroy
     redirect_to root_path, notice: "Email supprimé avec succès."
   end
+
+  def corbeille
+    @emails = Email.joins(receptions: :utilisateur)
+    .where(utilisateur: { id: session[:utilisateur_id] })
+    .where("receptions.date_suppr IS NOT NULL")
+    .where(est_spam: false, est_archiver: false)
+    .order(created_at: :desc)
+    .select("emails.*", "receptions.id as ids")
+    .page(params[:page]).per(10)
+
+    @emailenvoyer = Email.joins(receptions: :utilisateur)
+    .where(expediteur: session[:utilisateur_id])
+    .where("emails.date_suppr IS NOT NULL")
+    .order(created_at: :desc)
+    .page(params[:page]).per(10)
+  end
+
 
 
   private

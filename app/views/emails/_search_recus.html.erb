@@ -13,7 +13,7 @@
                   <% @emailrecus.each do |email| %>
                     <tr>
                         <div class="d-flex border-bottom text-dark pt-1 pb-1" style="background-color: <%= email.est_lu ? 'transparent' : '#d8ecfd' %>;">
-                              <div class="d-flex" style="width: 80%; cursor:pointer;" onclick="show('<%= email.id%>')">
+                              <div class="d-flex" style="width: 80%; cursor:pointer;" onclick="show('<%= email.id%>','br')">
                                <div style="width: 5%;">
                                   <% if email.expediteur.avatar? %>
                                     <%= image_tag rails_blob_path(email.expediteur.avatar , disposition: "inline"), class: "rounded-circle", width: "30px" %>

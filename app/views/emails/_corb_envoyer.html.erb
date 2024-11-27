@@ -1,18 +1,4 @@
-<% content_for :style do %>
-    <style>
-        table{
-            background-color: aqua !important;
-        }
-    </style>
-<% end %>
-
-<div class="card shadow mb-4">
-    <div class="card-header py-3">
-        <h1 class="m-0 font-weight-bold text-primary">Messages envoyés</h6>
-    </div>
-    <div class="card-body">
-        <div class="table-responsive">
-            <table class="table table-striped" id="dataTable" width="98%" cellspacing="0">
+<table class="table table-striped" id="dataTable" width="98%" cellspacing="0">
                 <thead>
                       <tr>
                           <div class="d-flex border-bottom text-dark mb-3 bg-none" style="font-weight: bold;">
@@ -24,10 +10,10 @@
                       </tr>
                 </thead>
                 <tbody>
-                  <% @emails.each do |email| %>
+                  <% @emailenvoyer.each do |email| %>
                     <tr>
                         <div class="d-flex border-bottom text-dark pt-1 pb-1" style="background-color: <%= email.est_lu ? 'transparent' : '#d8ecfd' %>;">
-                              <div class="d-flex" style="width: 80%; cursor:pointer;" onclick="show('<%= email.id%>')">
+                              <div class="d-flex" style="width: 80%; cursor:pointer;" onclick="show('<%= email.id%>','env')">
                                <div style="width: 5%;">
                                 <span class="badge badge-primary rounded-circle text-white" style="width: 30px; height: 30px; font-size: 18px; display: flex; justify-content: center; align-items: center;">
                                 <%= email.expediteur.nom[0].upcase + email.expediteur.prenom[0].upcase %> <!-- Première lettre du nom -->
@@ -38,13 +24,13 @@
                               <div style="width: 25%;"><%= l(email.date_envoi, format: :short) %></div>
                               </div>
                               <div class="d-flex justify-content-center" style="width: 20%;">
-                                <a  href="" data-toggle="modal" data-target="#spamModal<%=email.id%>" class="actionbtn mr-3"><i class="fa fa-share" data-toggle="tooltip" data-placement="top" title="Transferer"></i></a>
-                                <a href="" class="actionbtn ml-3" data-toggle="modal" data-target="#supprModal<%=email.id%>"><i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="Supprimer"></i></a>
+                                <a  href="" data-toggle="modal" data-target="#restoModal<%=email.id%>" class="actionbtn mr-3"><i class="fa fa-sync-alt" data-toggle="tooltip" data-placement="top" title="Restaurer"></i></a>
+                                <a href="" class="actionbtn ml-3" data-toggle="modal" data-target="#supprimerModal<%=email.id%>"><i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="Supprimer"></i></a>
                               </div>
                           </div>
                       </tr>
                       <!-- Supprimer Modal-->
-                        <div class="modal fade" id="supprModal<%=email.id%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal fade" id="supprimerModal<%=email.id%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -53,25 +39,33 @@
                                             <span aria-hidden="true">×</span>
                                         </button>
                                     </div>
-                                    <div class="modal-body">Êtes-vous sûre de suprrimer ce message ?</div>
+                                    <div class="modal-body">Êtes-vous sûre de suprrimer definitivement ce message ?</div>
                                     <div class="modal-footer">
                                         <button class="btn btn-secondary" type="button" data-dismiss="modal">No</button>
-                                        <%= button_to "Oui",  url_for(controller: 'emails', action: 'supprimer',id:email.id), method: :patch, class:"btn btn-primary" %>
+                                        <%= button_to "Oui",  url_for(controller: 'emails', action: 'destroy',id:email.id), method: :post, class:"btn btn-primary" %>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                    <!-- Archiver Modal-->
+                        <div class="modal fade" id="restoModal<%=email.id%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Restaurer</h5>
+                                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">×</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">Êtes-vous sûre de restaurer ce message ?</div>
+                                    <div class="modal-footer">
+                                        <button class="btn btn-secondary" type="button" data-dismiss="modal">No</button>
+                                        <%= button_to "Oui",  url_for(controller: 'emails', action: 'restaurer',id:email.id), method: :patch, class:"btn btn-primary" %>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    
                   <% end %>
                 </tbody>
             </table>
-        </div>
-    </div>
-</div>
-    
-<% content_for :scripts do %>
-    <script>
-    function show(id){     
-        window.location.href="/emails/env/"+id
-    }
-    </script>
-<% end %>

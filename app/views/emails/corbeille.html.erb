@@ -1,8 +1,11 @@
 <div class="card shadow mb-4" style="height: 85vh;">
     <div class="card-header py-3">
-        <h2 class="m-0 font-weight-bold text-primary">Recherche: <%= params[:word] %> </h6>
+        <h2 class="m-0 font-weight-bold text-primary">Corbeille </h6>
     </div>
     <div class="card-body">
+        <div class="alert alert-primary">
+        Les messages sont supprier definitivement après 30 jours
+      </div>
          <div id="accordion">
 
   <div class="card">
@@ -13,7 +16,7 @@
     </div>
     <div id="collapseOne" class="collapse show" data-parent="#accordion">
       <div class="card-body">
-            <%= render 'emails/search_recus' %>
+            <%= render 'emails/corb_recus' %>
       </div>
     </div>
   </div>
@@ -26,20 +29,7 @@
     </div>
     <div id="collapseTwo" class="collapse show">
       <div class="card-body">
-         <%= render 'emails/search_envoyer' %>
-      </div>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="card-header">
-      <a class="collapsed card-link">
-       <i class="fa fa-users"></i> Utilisateurs
-      </a>
-    </div>
-    <div id="collapseThree" class="collapse show" >
-      <div class="card-body">
-        <%= render 'emails/search_user' %>
+         <%= render 'emails/corb_envoyer' %>
       </div>
     </div>
   </div>

@@ -39,11 +39,24 @@ class ReceptionsController < ApplicationController
     end
   end
 
+  def supprimer
+    @reception = Reception.find(params[:id])
+    @reception.update(date_suppr: Date.today)
+    status_message = "now"
+    redirect_to root_path, notice: "Email #{status_message} avec succès."
+  end
+
+  def restaurer
+    @reception = Reception.find(params[:id])
+    @reception.update(date_suppr: nil)
+    status_message = "now"
+    redirect_to root_path, notice: "Email #{status_message} avec succès."
+  end
   # Supprime une réception
   def destroy
     @reception = Reception.find(params[:id])
     @reception.destroy
-    redirect_to receptions_path, notice: "Réception supprimée avec succès."
+    redirect_to root_path, notice: "Réception supprimée avec succès."
   end
 
   private
