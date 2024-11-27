@@ -1,0 +1,3 @@
+daily_report_job:
+  cron: "/1 * * * *" # Tous les jours à 6h du matin
+  class: "DailyReportJob"
