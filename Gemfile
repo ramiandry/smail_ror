@@ -19,6 +19,11 @@ gem "jbuilder"
 # Use Redis adapter to run Action Cable in production
 # gem "redis", ">= 4.0.1"
 
+group :test do
+  gem "whenever-test"
+end
+
+
 # paginatio
 gem "kaminari"
 
