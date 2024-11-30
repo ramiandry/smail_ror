@@ -33,6 +33,10 @@
     #profileInput {
       display: none;
     }
+
+    .iti {
+      width: 100%;
+    }
   </style>
  <% end %>
  
@@ -95,7 +99,7 @@
     <div class="form-group">
       <%= f.label :tel, "N° Téléphone" %>
     <div class="input-group">
-        <%= f.text_field :tel, class: "form-control", placeholder: "Tel", value: @utilisateur.tel %>
+        <%= f.text_field :tel, id:"phone", type:"tel", class: "form-control", placeholder: "Tel", value: @utilisateur.tel %>
     </div>
     </div>
 

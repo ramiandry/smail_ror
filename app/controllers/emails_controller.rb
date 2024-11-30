@@ -10,19 +10,20 @@ class EmailsController < ApplicationController
     .order(created_at: :desc)
     .select("emails.*", "receptions.id as ids")
     .page(params[:page]).per(10)
+    @users = Utilisateur.where("email LIKE ?", "%#{params[:word]}%")
   end
 
   def envoyer
+    @users=Utilisateur.all
+
     @emails = Email.joins(receptions: :utilisateur)
                 .where(expediteur: session[:utilisateur_id])
                 .where("emails.date_suppr IS NULL")
                 .order(created_at: :desc)
+    @users = Utilisateur.where("email LIKE ?", "%#{params[:word]}%")
   end
 
   def search
-    p params[:word]
-    @users = Utilisateur.where("email LIKE ?", "%#{params[:word]}%")
-
     @emailrecus = Email.joins(receptions: :utilisateur)
     .where(utilisateur: { id: session[:utilisateur_id] })
     .where(est_spam: false, est_archiver: false)
@@ -35,12 +36,15 @@ class EmailsController < ApplicationController
     .where("receptions.date_suppr IS NULL")
     .where("emails.corps LIKE :word OR emails.objet LIKE :word", word: "%#{params[:word]}%") # Filtrage par email
     .order(created_at: :desc)
+    @users = Utilisateur.where("email LIKE ?", "%#{params[:word]}%")
   end
 
   def show
     @email = Email.find(params[:id])
     @email.update(est_lu: true) unless @email.est_lu
     @etat=params[:etat]
+
+    @users=Utilisateur.all
   end
 
   def showSpam
@@ -50,6 +54,7 @@ class EmailsController < ApplicationController
     .where("receptions.date_suppr IS NULL")
     .order(created_at: :desc)
     .page(params[:page]).per(10)
+    @users = Utilisateur.where("email LIKE ?", "%#{params[:word]}%")
   end
 
   def showArchive
@@ -59,6 +64,7 @@ class EmailsController < ApplicationController
     .where("receptions.date_suppr IS NULL")
     .order(created_at: :desc)
     .page(params[:page]).per(10)
+    @users = Utilisateur.where("email LIKE ?", "%#{params[:word]}%")
   end
 
   def showFavoris
@@ -68,6 +74,7 @@ class EmailsController < ApplicationController
     .where("receptions.date_suppr IS NULL")
     .order(created_at: :desc)
     .page(params[:page]).per(10)
+    @users = Utilisateur.where("email LIKE ?", "%#{params[:word]}%")
   end
 
   def new

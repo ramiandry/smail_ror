@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Intl-Tel-Input Example</title>
+  <!-- Intl-Tel-Input CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/css/intlTelInput.css">
+  <style>
+    /* Custom CSS */
+    .phone-input {
+      max-width: 400px;
+      margin: 50px auto;
+    }
+
+    .phone-input input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+
+    .message {
+      margin-top: 10px;
+      font-size: 14px;
+      color: red;
+    }
+
+    .message.valid {
+      color: green;
+    }
+  </style>
+</head>
+<body>
+  <div class="phone-input">
+    <label for="phone">Phone Number:</label>
+    <input id="phone" type="tel" placeholder="Enter your phone number">
+    <div id="message" class="message"></div>
+  </div>
+
+  <!-- Intl-Tel-Input JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/intlTelInput.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/utils.js"></script>
+  <script>
+    // Initialize the phone input
+    const phoneInputField = document.querySelector("#phone");
+    const messageElement = document.querySelector("#message");
+
+    const iti = intlTelInput(phoneInputField, {
+      initialCountry: "auto",
+      geoIpLookup: function(callback) {
+        fetch('https://ipinfo.io?token=your_api_token') // Remplacez par votre clé API
+          .then(response => response.json())
+          .then(data => callback(data.country))
+          .catch(() => callback("us"));
+      },
+      utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/utils.js",
+      separateDialCode: true, // Affiche l'indicatif téléphonique séparément
+    });
+
+    // Validate the phone number on blur
+    phoneInputField.addEventListener("blur", function () {
+      if (iti.isValidNumber()) {
+        messageElement.textContent = "Valid phone number!";
+        messageElement.classList.add("valid");
+        messageElement.classList.remove("invalid");
+      } else {
+        messageElement.textContent = "Invalid phone number. Please try again.";
+        messageElement.classList.add("invalid");
+        messageElement.classList.remove("valid");
+      }
+    });
+
+    // Get the phone number in E.164 format (example)
+    phoneInputField.addEventListener("input", function () {
+      const number = iti.getNumber();
+      console.log("Phone number in E.164 format:", number);
+    });
+  </script>
+</body>
+</html>

@@ -59,6 +59,20 @@ class ReceptionsController < ApplicationController
     redirect_to root_path, notice: "Réception supprimée avec succès."
   end
 
+  def transfert
+    @users_trans=params[:user_ids]
+    @users_trans.each do |user|
+      @reception = Reception.new({
+        utilisateur_id: user,
+        email_id: params[:email_id],
+        transfert_id: session[:utilisateur_id]
+      })
+      @reception.save
+    end
+    flash[:alert] = "Transferer avec succes"
+    redirect_back(fallback_location: root_path)
+  end
+
   private
 
   # Paramètres sécurisés

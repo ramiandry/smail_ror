@@ -52,6 +52,7 @@
                             </a>
                                 <a href="" class="actionbtn" data-toggle="modal" data-target="#archModal<%=email.id%>"><i class="fa fa-archive" data-toggle="tooltip" data-placement="top" title="Archiver"></i></a>
                                 <a href="" class="actionbtn" data-toggle="modal" data-target="#supprModal<%=email.id%>"><i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="Supprimer"></i></a>
+                                <a  href="" data-toggle="modal" data-target="#transModal<%=email.id%>" class="actionbtn mr-3"><i class="fa fa-share" data-toggle="tooltip" data-placement="top" title="Transferer"></i></a>
                                 <a href="<%= url_for(controller: 'emails', action: 'non_lu', id: email.id) %>" class="actionbtn" ><i class="fa fa-eye-slash" data-toggle="tooltip" data-placement="top" title="Marquer non lu"></i></a>
                               </div>
                           </div>
@@ -74,6 +75,7 @@
                                 </div>
                             </div>
                         </div>
+                        <%= render partial: 'emails/modal_transfert', locals: { email: email } %>
                     <!-- Archiver Modal-->
                         <div class="modal fade" id="archModal<%=email.id%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">

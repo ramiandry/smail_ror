@@ -17,10 +17,8 @@
     <link href="/css/sb-admin-2.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-lite.min.css" rel="stylesheet">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.min.css">
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js"></script>
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/css/intlTelInput.css">
+
 
     <%= yield :style %>
 </head>
@@ -269,7 +267,7 @@
                                 <% if @user.avatar?  %>
                                 <%= image_tag rails_blob_path(@user.avatar), class: "img-profile rounded-circle"  %>
                                 <% else %> 
-                                <img id="profilePicture" src='/img/undraw_profile.svg'  class="rounded-circle" alt="Profile Picture"  width="30px">
+                                <img  src='/img/undraw_profile.svg'  class="rounded-circle" alt="Profile Picture"  width="30px">
 
                                 <% end %>
                                 </a>
@@ -371,17 +369,25 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-lite.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.4.4/dist/umd/popper.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/intlTelInput.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/utils.js"></script>
     <script>
-        $(document).ready(function(){
-            $('[data-toggle="tooltip"]').tooltip();   
-        });
-        var iti = window.intlTelInput(phoneInput, {
-        initialCountry: "us",  // Le pays par défaut (ici, les États-Unis)
-        onlyCountries: [],     // Afficher tous les pays
-        utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+        // Initialize the phone input
+        const phoneInputField = document.querySelector("#phone");
+        const messageElement = document.querySelector("#message");
+
+        const iti = intlTelInput(phoneInputField, {
+        initialCountry: "auto",
+        geoIpLookup: function(callback) {
+            fetch('https://ipinfo.io?token=your_api_token') // Remplacez par votre clé API
+            .then(response => response.json())
+            .then(data => callback(data.country))
+            .catch(() => callback("us"));
+        },
+        utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/utils.js",
+        separateDialCode: true, // Affiche l'indicatif téléphonique séparément
         });
     </script>
-
     <%= yield :scripts %>
 
 

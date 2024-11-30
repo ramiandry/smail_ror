@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_26_051321) do
+ActiveRecord::Schema[7.2].define(version: 2024_11_28_065246) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -46,9 +46,9 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_26_051321) do
     t.boolean "est_lu", default: false
     t.boolean "est_archiver", default: false
     t.boolean "est_spam", default: false
+    t.integer "expediteur_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "expediteur_id", null: false
     t.boolean "est_favoris", default: false
     t.date "date_suppr"
     t.index ["expediteur_id"], name: "index_emails_on_expediteur_id"
@@ -70,7 +70,9 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_26_051321) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.date "date_suppr"
+    t.integer "transfert_id"
     t.index ["email_id"], name: "index_receptions_on_email_id"
+    t.index ["transfert_id"], name: "index_receptions_on_transfert_id"
     t.index ["utilisateur_id"], name: "index_receptions_on_utilisateur_id"
   end
 
@@ -94,4 +96,5 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_26_051321) do
   add_foreign_key "piece_jointes", "emails"
   add_foreign_key "receptions", "emails"
   add_foreign_key "receptions", "utilisateurs"
+  add_foreign_key "receptions", "utilisateurs", column: "transfert_id"
 end

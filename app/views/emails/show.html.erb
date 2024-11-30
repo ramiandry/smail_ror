@@ -42,6 +42,10 @@
       </div>
       <div class="d-flex justify-content-between align-items-center" style="width: 20%;">
             <a href="" class="actionbtn" data-toggle="modal" data-target="#supprModal<%=@email.id%>"><i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="Supprimer"></i></a>
+            <% if @etat!="corb" %>
+            <a  href="" data-toggle="modal" data-target="#transModal<%=email.id%>" class="actionbtn mr-3"><i class="fa fa-share" data-toggle="tooltip" data-placement="top" title="Transferer"></i></a>
+            <% end %>
+            
             <% if @etat!="env" %>
             <a  href="" data-toggle="modal" data-target="#spamModal<%=@email.id%>" class="actionbtn">
                 <% if @etat!="spam" %>
@@ -68,6 +72,8 @@
             
           </div>
       </div>
+            <%= render partial: 'emails/modal_transfert', locals: { email: @email } %>
+      
       <!-- Supprimer Modal-->
                         <div class="modal fade" id="supprModal<%=@email.id%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
@@ -81,7 +87,7 @@
                                     <div class="modal-body">Êtes-vous sûre de suprrimer ce message ?</div>
                                     <div class="modal-footer">
                                         <button class="btn btn-secondary" type="button" data-dismiss="modal">No</button>
-                                        <%= button_to "Oui",  url_for(controller: 'emails', action: 'destroy',id:@email.id), method: :post, class:"btn btn-primary" %>
+                                        <%= button_to "Oui",  url_for(controller: 'emails', action: 'supprimer',id:@email.id), method: :post, class:"btn btn-primary" %>
                                     </div>
                                 </div>
                             </div>

@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   get "sessions/create"
   get "sessions/destroy"
   patch "receptions/supprimer", to: "receptions#supprimer"
+  post "receptions/transfert", to: "receptions#transfert", as: :transfert
   patch "emails/supprimer", to: "emails#supprimer"
   get "emails/new", to: "emails#new", as: :newemails
   get "emails/envoyer", to: "emails#envoyer", as: :envoyer
