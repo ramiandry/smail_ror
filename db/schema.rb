@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_12_04_071629) do
+ActiveRecord::Schema[7.2].define(version: 2024_12_05_063955) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -47,6 +47,17 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_04_071629) do
     t.index ["bloquer_id"], name: "index_bloquers_on_bloquer_id"
     t.index ["utilisateur_id", "bloquer_id"], name: "index_bloquers_on_utilisateur_id_and_bloquer_id", unique: true
     t.index ["utilisateur_id"], name: "index_bloquers_on_utilisateur_id"
+  end
+
+  create_table "devices", force: :cascade do |t|
+    t.integer "utilisateur_id", null: false
+    t.string "systeme"
+    t.string "marque"
+    t.string "pays"
+    t.string "ip"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["utilisateur_id"], name: "index_devices_on_utilisateur_id"
   end
 
   create_table "emails", force: :cascade do |t|
@@ -104,6 +115,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_04_071629) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "bloquers", "utilisateurs"
   add_foreign_key "bloquers", "utilisateurs", column: "bloquer_id"
+  add_foreign_key "devices", "utilisateurs"
   add_foreign_key "emails", "utilisateurs", column: "expediteur_id"
   add_foreign_key "piece_jointes", "emails"
   add_foreign_key "receptions", "emails"

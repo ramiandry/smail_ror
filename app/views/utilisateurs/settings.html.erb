@@ -45,7 +45,7 @@
  
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h2 class="m-0 font-weight-bold text-primary">Modifier Profile</h6>
+        <h2 class="m-0 font-weight-bold text-primary">Parametres</h6>
     </div>
     <div class="card-body">
  <div class="col-md-12">
@@ -117,30 +117,26 @@
                                     <%= render 'utilisateurs/modal_bloquer' %>
                             </div>
                             <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
-                                <table class="table" cellspacing="0">
+                                <table class="table mt-2" cellspacing="0">
                                     <thead>
-                                        <tr>
-                                            <th>Contest Name</th>
-                                            <th>Date</th>
-                                            <th>Award Position</th>
-                                        </tr>
+                                       
                                     </thead>
                                     <tbody>
+                                        <% @device_info.each do |device| %>
+                                        
                                         <tr>
-                                            <td><a href="#">Work 1</a></td>
-                                            <td>Doe</td>
-                                            <td>john@example.com</td>
+                                            <td class="d-flex align-items-center">
+                                                <div><%= device.systeme%></div>
+                                            <% if device.ip==request.remote_ip %>
+                                                <div class="spinner-grow spinner-grow-sm text-success ml-2"></div>
+                                            <% end %>
+                                            </td>
+                                            <td><%= device.marque%></td>
+                                            <td><%= device.pays%></td>
+                                            <td><%= device.ip%></td>
+                                            <td><%= l(device.created_at, format: :long)%></td>
                                         </tr>
-                                        <tr>
-                                            <td><a href="#">Work 2</a></td>
-                                            <td>Moe</td>
-                                            <td>mary@example.com</td>
-                                        </tr>
-                                        <tr>
-                                            <td><a href="#">Work 3</a></td>
-                                            <td>Dooley</td>
-                                            <td>july@example.com</td>
-                                        </tr>
+                                        <% end %>
                                     </tbody>
                                 </table>
                             </div>
@@ -162,9 +158,3 @@
     });
     </script>
 <% end %>
-
-
-
-    
-
-  

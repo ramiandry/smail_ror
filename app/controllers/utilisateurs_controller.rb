@@ -1,7 +1,7 @@
 class UtilisateursController < ApplicationController
   layout "layout", only: [ :profile, :show, :settings ] # Spécifie que ce layout s'applique uniquement à la méthode :profile
   before_action :authentifier_utilisateur!, only: [ :profile, :show, :settings ] # Applique le before_action uniquement à la méthode :profile
-
+  require "device_detector"
   # Affiche tous les utilisateurs
   def index
     @utilisateurs = Utilisateur.all
@@ -21,6 +21,7 @@ class UtilisateursController < ApplicationController
     @utilisateurs = Utilisateur.all
     @utilisateurs_non_bloques = Utilisateur.where.not(id: @utilisateur.bloques.pluck(:id))
     @utilisateurs_bloques = @utilisateur.bloques
+    @device_info = @utilisateur.devices.order(created_at: :desc)
   end
 
   # Affiche le formulaire pour créer un nouvel utilisateur
