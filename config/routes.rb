@@ -23,6 +23,10 @@ Rails.application.routes.draw do
   get "emails/non_lu/:id", to: "emails#non_lu"
   get "signin", to: "utilisateurs#index", as: :login
   get "utilisateurs/profile", to: "utilisateurs#profile", as: :profile
+  get "utilisateurs/settings", to: "utilisateurs#settings", as: :settings
+  patch "utilisateurs/editPass", to: "utilisateurs#editPass", as: :edit_pass
+  post "utilisateurs/blocage", to: "utilisateurs#blocage", as: :blocage
+  get "utilisateurs/debloquer/:id", to: "utilisateurs#debloquer", as: :debloquer
   get "utilisateurs/show/:id", to: "utilisateurs#show", as: :profile_show
   post "utilisateurs/create", to: "utilisateurs#create", as: :utilisateurs
   get "register", to: "utilisateurs#new"

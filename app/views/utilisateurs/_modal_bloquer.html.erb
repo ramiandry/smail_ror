@@ -1,0 +1,41 @@
+<!-- Supprimer Modal-->
+<div class="modal fade" id="blockModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <%= form_with url: blocage_path, method: :post do %>
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Bloqués</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <% @utilisateurs_non_bloques.each do |user| %>
+            <div class="d-flex align-items-center justify-content-between mb-2">
+              <div class="d-flex align-items-center">
+                <div>
+                  <% if user.avatar? %>
+                    <%= image_tag rails_blob_path(user.avatar, disposition: "inline"), class: "rounded-circle", width: "30px" %>
+                  <% else %>
+                    <span class="badge badge-primary rounded-circle text-white" 
+                          style="width: 30px; height: 30px; font-size: 18px; display: flex; justify-content: center; align-items: center;">
+                      <%= user.nom[0].upcase %><%= user.prenom[0].upcase %>
+                    </span>
+                  <% end %>
+                </div>
+                <div class="ml-2"><%= user.nom.titleize %> <%= user.prenom.titleize %></div>
+              </div>
+              <div class="ml-2" style="align-self: self-end;">
+                <%= check_box_tag 'user_ids[]', user.id, false, id: "user_trans_#{user.id}" %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Annuler</button>
+          <%= submit_tag "Bloquer", class: "btn btn-primary", data: { disable_with: 'Submitting...' } %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

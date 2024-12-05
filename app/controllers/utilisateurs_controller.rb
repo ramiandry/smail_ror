@@ -1,6 +1,6 @@
 class UtilisateursController < ApplicationController
-  layout "layout", only: [ :profile, :show ] # Spécifie que ce layout s'applique uniquement à la méthode :profile
-  before_action :authentifier_utilisateur!, only: [ :profile, :show ] # Applique le before_action uniquement à la méthode :profile
+  layout "layout", only: [ :profile, :show, :settings ] # Spécifie que ce layout s'applique uniquement à la méthode :profile
+  before_action :authentifier_utilisateur!, only: [ :profile, :show, :settings ] # Applique le before_action uniquement à la méthode :profile
 
   # Affiche tous les utilisateurs
   def index
@@ -14,6 +14,13 @@ class UtilisateursController < ApplicationController
 
   def profile
     @utilisateur = Utilisateur.find(session[:utilisateur_id])
+  end
+
+  def settings
+    @utilisateur = Utilisateur.find(session[:utilisateur_id])
+    @utilisateurs = Utilisateur.all
+    @utilisateurs_non_bloques = Utilisateur.where.not(id: @utilisateur.bloques.pluck(:id))
+    @utilisateurs_bloques = @utilisateur.bloques
   end
 
   # Affiche le formulaire pour créer un nouvel utilisateur
@@ -34,6 +41,33 @@ class UtilisateursController < ApplicationController
   # Affiche le formulaire pour éditer un utilisateur existant
   def edit
     @utilisateur = Utilisateur.find(params[:id])
+  end
+
+  def blocage
+    @users_block=params[:user_ids]
+    @utilisateur = Utilisateur.find(session[:utilisateur_id])
+    @users_block.each do |user|
+      user_to_block=Utilisateur.find(user)
+      @utilisateur.bloqueurs.create(bloquer: user_to_block)
+    end
+    redirect_to settings_path
+  end
+
+  def debloquer
+    @utilisateur = Utilisateur.find(session[:utilisateur_id])  # Utilisateur actuel
+    @utilisateur_bloque = Utilisateur.find(params[:id])  # Utilisateur à débloquer
+
+    # Supprimer l'association de blocage
+    bloqueur = @utilisateur.bloqueurs.find_by(bloquer: @utilisateur_bloque)
+    bloqueur.destroy if bloqueur
+
+    redirect_to settings_path, notice: "L'utilisateur a été débloqué avec succès."
+  end
+
+  def editPass
+      @utilisateur = Utilisateur.find(session[:utilisateur_id])
+      @utilisateur.update(password_params)
+      redirect_to settings_path
   end
 
   # Met à jour un utilisateur existant
@@ -67,5 +101,11 @@ class UtilisateursController < ApplicationController
     unless utilisateur_connecte?
       redirect_to login_path, alert: "Vous devez être connecté pour accéder à cette page."
     end
+  end
+
+  private
+  # Autoriser uniquement les champs de mot de passe
+  def password_params
+    params.require(:utilisateur).permit(:password, :password_confirmation)
   end
 end
