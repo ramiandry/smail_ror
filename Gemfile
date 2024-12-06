@@ -37,6 +37,7 @@ gem "bootsnap", require: false
 gem "geocoder"
 
 gem "device_detector"
+gem "pg", "~> 1.2"
 
 gem "browser"
 
