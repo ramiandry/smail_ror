@@ -5,11 +5,11 @@ default: &default
 
 development:
   <<: *default
-  database: app_development
-  username: postgres
-  password: smail
-  host: localhost
-  port: 5432
+  database: postgres
+  username: postgres.hkryskhjtlaamwnheylv
+  password: FAnantenna16!
+  host: aws-0-ap-southeast-1.pooler.supabase.com
+  port: 6543
 
 test:
   <<: *default
