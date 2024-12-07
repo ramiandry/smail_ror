@@ -36,7 +36,7 @@ class EmailsController < ApplicationController
     .where("receptions.date_suppr IS NULL")
     .where("emails.corps LIKE :word OR emails.objet LIKE :word", word: "%#{params[:word]}%") # Filtrage par email
     .order(created_at: :desc)
-    @users = Utilisateur.where("email LIKE ?", "%#{params[:word]}%")
+    @users = Utilisateur.where("email LIKE :word OR nom LIKE :word OR prenom LIKE :word", word: "%#{params[:word]}%")
   end
 
   def show

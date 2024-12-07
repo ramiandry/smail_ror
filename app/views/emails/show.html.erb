@@ -1,3 +1,17 @@
+<style>
+     @media (max-width:500px) {
+        #containers, #cont-prof{
+            display: block !important;
+            width: 100% !important;
+        }
+
+        #email-action{
+            width: 100% !important;
+            justify-content: space-evenly !important;
+        }
+      }
+</style>
+
 <div class="card shadow mb-4" style="height: 85vh;">
     <div class="card-header py-3">
         <h2 class="m-0 font-weight-bold text-primary">
@@ -23,16 +37,15 @@
 
           </span>
     </div>
-    <div class="card-body" style="overflow-y: scroll;">
-      <div class="d-flex align-items-center justify-content-between border-bottom border-2">
-        <div class="d-flex align-items-center">
-          <div class="mr-3">
+    <div class="card-body" >
+      <div class="d-flex align-items-center justify-content-between border-bottom border-2" id="containers">
+        <div class="d-flex align-items-center" id="cont-prof">
+          <div class="mr-3" onclick="showUser('<%= @email.expediteur.id%>')">
               <div class="profile-photo">
-                <span class="badge badge-primary rounded-circle text-white" style="width: 50px; height: 50px; font-size: 24px; display: flex; justify-content: center; align-items: center;">
+                <span class="badge badge-primary rounded-circle text-white"  style="width: 50px; height: 50px; font-size: 24px; display: flex; justify-content: center; align-items: center;">
                   <%= @email.expediteur.nom[0].upcase + @email.expediteur.prenom[0].upcase %> <!-- Première lettre du nom -->
                 </span>
             </div>
-
           </div>
           <div>
               <div class="small text-gray-500">Envoyé du <%= l(@email.created_at, format: :long) %></div>
@@ -40,10 +53,10 @@
               <p class="mt-0">  <%=@email.expediteur.nom.titleize+" "+@email.expediteur.prenom.titleize%></p>
           </div>
       </div>
-      <div class="d-flex justify-content-between align-items-center" style="width: 20%;">
+      <div class="d-flex justify-content-between align-items-center" id="email-action" style="width: 20%;">
             <a href="" class="actionbtn" data-toggle="modal" data-target="#supprModal<%=@email.id%>"><i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="Supprimer"></i></a>
             <% if @etat!="corb" %>
-            <a  href="" data-toggle="modal" data-target="#transModal<%=email.id%>" class="actionbtn mr-3"><i class="fa fa-share" data-toggle="tooltip" data-placement="top" title="Transferer"></i></a>
+            <a  href="" data-toggle="modal" data-target="#transModal<%=@email.id%>" class="actionbtn mr-3"><i class="fa fa-share" data-toggle="tooltip" data-placement="top" title="Transferer"></i></a>
             <% end %>
             
             <% if @etat!="env" %>

@@ -19,7 +19,25 @@
 
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/css/intlTelInput.css">
 
+    <style>
+        @media (max-width:500px) { 
+            tbody tr div{
+            }
+            .d-flex.border-bottom.text-dark.pt-1.pb-1, .d-flex.border-bottom.text-dark.pt-1.pb-1 div{
+                display: block !important;
+            }
 
+            .d-flex.border-bottom.text-dark.pt-1.pb-1 div, .d-flex.border-bottom.text-dark.pt-1.pb-1 div div{
+                width: 96% !important;
+                margin-left: 4% !important;
+            }
+
+            .d-flex.border-bottom.text-dark.mb-3.bg-none{
+                display: none !important;
+            }
+        }
+
+    </style>
     <%= yield :style %>
 </head>
 
@@ -135,11 +153,11 @@
                             </a>
                             <!-- Dropdown - Messages -->
                             <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
-                                <form action="" class="form-inline mr-auto w-100 navbar-search">
+                                <form action="<%= url_for(controller: 'emails', action: 'search') %>" class="form-inline mr-auto w-100 navbar-search">
                                     <div class="input-group">
-                                        <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+                                        <input type="text" name="word" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
                                         <div class="input-group-append">
-                                            <button class="btn btn-primary" type="button">
+                                            <button class="btn btn-primary" type="submit">
                                                 <i class="fas fa-search fa-sm"></i>
                                             </button>
                                         </div>
@@ -383,6 +401,11 @@
         utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/utils.js",
         separateDialCode: true, // Affiche l'indicatif téléphonique séparément
         });
+    </script>
+    <script>
+        function showUser(id){     
+            window.location.href="/utilisateurs/show/"+id
+        }
     </script>
     <%= yield :scripts %>
 
