@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   get "sessions/new"
-  get "sessions/create"
+  get "sessions/create", to: "sessions#create", as: :sessions
   get "sessions/destroy"
   patch "receptions/supprimer", to: "receptions#supprimer"
   post "receptions/transfert", to: "receptions#transfert", as: :transfert

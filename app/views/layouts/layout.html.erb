@@ -21,7 +21,9 @@
 
     <style>
         @media (max-width:500px) { 
-            tbody tr div{
+
+            .card-header.py-3 h1{
+                font-size: 5vw;
             }
             .d-flex.border-bottom.text-dark.pt-1.pb-1, .d-flex.border-bottom.text-dark.pt-1.pb-1 div{
                 display: block !important;
@@ -34,6 +36,14 @@
 
             .d-flex.border-bottom.text-dark.mb-3.bg-none{
                 display: none !important;
+            }
+
+            #portable, #head_t{
+                display: none !important;
+            }
+
+            #mobile{
+                display: flex !important;
             }
         }
 
@@ -408,6 +418,16 @@
         }
     </script>
     <%= yield :scripts %>
+    <script>
+        // Définir une media query
+        const mediaQuery = window.matchMedia('(max-width: 500px)');
+
+        // Vérifier si la media query est vraie
+        if (mediaQuery.matches) {
+            document.querySelector('#sidebarToggleTop').click();
+        }
+
+    </script>
 
 
 </body>

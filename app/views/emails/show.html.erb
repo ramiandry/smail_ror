@@ -9,6 +9,10 @@
             width: 100% !important;
             justify-content: space-evenly !important;
         }
+
+        .card-header.py-3 h2{
+            font-size: 5vw !important;
+        }
       }
 </style>
 
@@ -43,7 +47,7 @@
           <div class="mr-3" onclick="showUser('<%= @email.expediteur.id%>')">
               <div class="profile-photo">
                 <span class="badge badge-primary rounded-circle text-white"  style="width: 50px; height: 50px; font-size: 24px; display: flex; justify-content: center; align-items: center;">
-                  <%= @email.expediteur.nom.present? ? @email.expediteur.nom[0].upcase : "" + @email.expediteur.prenom.present? ? @email.expediteur.prenom[0].upcase : ""%> <!-- Première lettre du nom -->
+                  <%= @email.expediteur.nom.present? ? @email.expediteur.nom[0].upcase : ""%>  <%= @email.expediteur.prenom.present? ? @email.expediteur.prenom[0].upcase : ""%> <!-- Première lettre du nom -->
                 </span>
             </div>
           </div>
