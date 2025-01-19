@@ -104,7 +104,7 @@
                                     <div class="modal-body">Êtes-vous sûre de suprrimer ce message ?</div>
                                     <div class="modal-footer">
                                         <button class="btn btn-secondary" type="button" data-dismiss="modal">No</button>
-                                        <%= button_to "Oui",  url_for(controller: 'receptions', action: 'supprimer',id:email.ids), method: :patch, class:"btn btn-primary" %>
+                                        <%= button_to "Oui",  url_for(controller: 'receptions', action: 'destroy',id:email.ids), method: :patch, class:"btn btn-primary" %>
                                     </div>
                                 </div>
                             </div>
