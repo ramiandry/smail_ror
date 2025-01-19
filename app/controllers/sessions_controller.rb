@@ -22,8 +22,8 @@ class SessionsController < ApplicationController
       end
       redirect_to root_path, notice: "Bienvenue, #{utilisateur.nom}!"
     else
-      flash.now[:alert] = "Email ou mot de passe incorrect"
-      render :new
+      flash[:alert] = "Email ou mot de passe incorrect"
+      redirect_to login_path
     end
   end
 

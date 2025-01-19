@@ -22,7 +22,26 @@
       href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
       rel="stylesheet"
     />
+  <style>
+    .flash {
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 5px;
+      font-weight: bold;
+    }
 
+    .flash.notice {
+      background-color: #d1e7dd;
+      color: #0f5132;
+      border: 1px solid #badbcc;
+    }
+
+    .flash.alert {
+      background-color: #f8d7da;
+      color: #842029;
+      border: 1px solid #f5c2c7;
+    }
+  </style>
     <!-- Custom styles for this template-->
     <link href="/css/sb-admin-2.min.css" rel="stylesheet" />
   </head>
@@ -39,7 +58,12 @@
                 <div class="col-lg-6 d-none d-lg-block bg-login-image">
                     
                 </div>
-                <div class="col-lg-6">
+                <div class="col-lg-6 text-center">
+                  <% flash.each do |key, message| %>
+                    <div class="flash <%= key %>">
+                      <%= message %>
+                    </div>
+                  <% end %>
                   <div class="p-5">
                     <div class="text-center">
                       <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
@@ -60,14 +84,11 @@
                     </div>
                     <hr />
                     <div class="text-center">
-                      <a class="small" href="forgot-password.html"
-                        >Forgot Password?</a
-                      >
+                      <a class="small" href="<%= url_for(controller: 'utilisateurs', action: 'new') %>"
+                        >Create an Account!</a>
                     </div>
                     <div class="text-center">
-                      <a class="small" href="<%= url_for(controller: 'utilisateurs', action: 'new') %>"
-                        >Create an Account!</a
-                      >
+                      
                     </div>
                   </div>
                 </div>

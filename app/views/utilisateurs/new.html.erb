@@ -19,6 +19,27 @@
 
     <!-- Custom styles for this template-->
     <link href="/css/sb-admin-2.min.css" rel="stylesheet">
+    <style>
+        .flash {
+        padding: 10px;
+        margin: 10px 0;
+        border-radius: 5px;
+        font-weight: bold;
+        }
+
+        .flash.notice {
+        background-color: #d1e7dd;
+        color: #0f5132;
+        border: 1px solid #badbcc;
+        }
+
+        .flash.alert {
+        background-color: #f8d7da;
+        color: #842029;
+        border: 1px solid #f5c2c7;
+        }
+
+    </style>
 
 </head>
 
@@ -32,6 +53,11 @@
                 <div class="row">
                     <div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
                     <div class="col-lg-7">
+                        <% flash.each do |key, message| %>
+                            <div class="flash <%= key %>">
+                            <%= message %>
+                            </div>
+                        <% end %>
                         <div class="p-5">
                             <div class="text-center">
                                 <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
@@ -67,10 +93,10 @@
                             </div>
                             <hr>
                             <div class="text-center">
-                                <a class="small" href="forgot-password.html">Forgot Password?</a>
                             </div>
                             <div class="text-center">
-                                <a class="small" href="login.html">Already have an account? Login!</a>
+                                <a class="small" href="<%= url_for(controller: 'utilisateurs', action: 'index') %>">Already have an account? Login!</a>
+                               
                             </div>
                         </div>
                     </div>

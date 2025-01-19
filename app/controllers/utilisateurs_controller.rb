@@ -31,12 +31,43 @@ class UtilisateursController < ApplicationController
 
   # Crée un nouvel utilisateur
   def create
-    @utilisateur = Utilisateur.new(utilisateur_params)
-    if @utilisateur.save
-      redirect_to login_path, notice: "Utilisateur créé avec succès."
-    else
+      @utilisateur = Utilisateur.new(utilisateur_params)
+      if @utilisateur.save
+        @email = Email.new(
+          objet: "Bienvenue sur Smail",
+          corps: '
+          <div style="font-family: Arial, sans-serif; font-size: 16px; line-height: 1.6; color: #333;  padding: 20px;">
+          <div style="max-width: 600px; margin: auto; background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+            <div style="background-color: #4e73df; color: white; text-align: center; padding: 20px;">
+              <h1 style="margin: 0; font-size: 24px;">Welcome to Smail!</h1>
+            </div>
+            <div style="padding: 20px;">
+              <p>We are thrilled to welcome you to our platform. Smail is your ultimate messaging management solution, designed to make your communication seamless and efficient.</p>
+              <p>If you have any questions or need assistance, feel free to reach out to our support team anytime.</p>
+              <br>
+              <p style="color: #555; text-align: center;">
+                Best regards,<br>
+                <strong>The Smail Team</strong>
+              </p>
+            </div>
+            <div style="background-color: #4e73df; color: white; text-align: center; padding: 10px;">
+              <p style="margin: 0; font-size: 12px;">&copy; 2025 Smail. All rights reserved.</p>
+            </div>
+          </div>
+        </div>
+
+          ',
+          expediteur: Utilisateur.last, # Associe l'utilisateur comme expéditeur
+        )
+        @email.save
+        reception = Reception.new(utilisateur_id: @utilisateur.id, email_id: @email.id)
+        if reception.save
+          flash[:notice] = "Utilisateur créé avec succès. Votre email : #{@utilisateur.email}"
+        redirect_to login_path
+        end
+      else
       render :new, status: :unprocessable_entity
-    end
+      end
   end
 
   # Affiche le formulaire pour éditer un utilisateur existant
