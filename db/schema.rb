@@ -11,6 +11,9 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[7.2].define(version: 2024_12_05_063955) do
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -40,8 +43,8 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_05_063955) do
   end
 
   create_table "bloquers", force: :cascade do |t|
-    t.integer "utilisateur_id", null: false
-    t.integer "bloquer_id", null: false
+    t.bigint "utilisateur_id", null: false
+    t.bigint "bloquer_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["bloquer_id"], name: "index_bloquers_on_bloquer_id"
@@ -50,7 +53,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_05_063955) do
   end
 
   create_table "devices", force: :cascade do |t|
-    t.integer "utilisateur_id", null: false
+    t.bigint "utilisateur_id", null: false
     t.string "systeme"
     t.string "marque"
     t.string "pays"
@@ -67,7 +70,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_05_063955) do
     t.boolean "est_lu", default: false
     t.boolean "est_archiver", default: false
     t.boolean "est_spam", default: false
-    t.integer "expediteur_id", null: false
+    t.bigint "expediteur_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "est_favoris", default: false
@@ -79,19 +82,19 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_05_063955) do
     t.string "nom_fichier"
     t.integer "taille_fichier"
     t.string "type_fichier"
-    t.integer "email_id", null: false
+    t.bigint "email_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["email_id"], name: "index_piece_jointes_on_email_id"
   end
 
   create_table "receptions", force: :cascade do |t|
-    t.integer "utilisateur_id", null: false
-    t.integer "email_id", null: false
+    t.bigint "utilisateur_id", null: false
+    t.bigint "email_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.date "date_suppr"
-    t.integer "transfert_id"
+    t.bigint "transfert_id"
     t.index ["email_id"], name: "index_receptions_on_email_id"
     t.index ["transfert_id"], name: "index_receptions_on_transfert_id"
     t.index ["utilisateur_id"], name: "index_receptions_on_utilisateur_id"
